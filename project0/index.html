@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lumières & Tempête — A Classical French Revolution Theme</title>
+  <title>Becoming Friends With Your Camera - CS180 Project 0</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
@@ -31,6 +31,8 @@
       font-family: "Libre Baskerville", Georgia, serif;
       line-height: 1.6;
       letter-spacing: .2px;
+      margin: 0;
+      padding: 0;
     }
 
     /* Subtle canvas/oil texture using layered gradients */
@@ -63,7 +65,7 @@
 
     /* Header */
     header.hero{
-      position: relative; overflow: hidden; padding: 8rem 0 6rem; z-index:1;
+      position: relative; overflow: hidden; padding: 4rem 0 3rem; z-index:1;
       background:
         radial-gradient(80% 90% at 50% 10%, rgba(194,164,101,.10), transparent 70%),
         radial-gradient(60% 100% at 50% 100%, rgba(123,47,42,.10), transparent 60%),
@@ -100,7 +102,7 @@
     .nav a:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.1); }
 
     /* Sections */
-    section { padding: 4.5rem 0; }
+    section { padding: 3rem 0; }
     h2{ font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.8rem, 3.2vw, 2.4rem); margin:0 0 1rem; color: #eadfcd; letter-spacing:.3px; }
 
     .lead{ color: #e9decc; max-width: 70ch; opacity: .92; }
@@ -140,8 +142,26 @@
     /* Gallery */
     .gallery{ display:grid; grid-template-columns: repeat(12, 1fr); gap:1rem; }
     .gallery figure{ grid-column: span 6; background: rgba(227,216,198,.06); border:1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 12px 22px var(--shadow); }
-    .gallery img{ width:100%; height: 260px; object-fit: cover; filter: sepia(.55) contrast(.9) brightness(.92) saturate(.8) grayscale(.1); }
+    .gallery img{ width:100%; height: 260px; object-fit: cover; }
     .gallery figcaption{ padding:.6rem .8rem; color:#e9dec9; font-size:.9rem; background: linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,0)); }
+
+    /* Image table */
+    .image-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+    }
+    .image-table td {
+      width: 20%;
+      padding: 0;
+      border: 1px solid var(--border);
+    }
+    .image-table img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+    }
 
     /* Timeline */
     .timeline{ position:relative; padding-left: 1rem; }
@@ -160,9 +180,11 @@
     @media (max-width: 980px){
       .card { grid-column: span 6; }
       .gallery figure{ grid-column: span 12; }
+      .image-table td { width: 50%; }
     }
     @media (max-width: 640px){
       .card { grid-column: span 12; }
+      .image-table td { width: 100%; }
     }
 
     /* Gentle scroll reveal */
@@ -175,113 +197,156 @@
     <div class="tricolor" aria-hidden="true"></div>
     <div class="container">
       <h1 class="title">Becoming Friends With Your Camera</h1>
-      <!-- <p class="subtitle dropcap">
-        <span>CS180 Project 0</span>
-        <span>Isabella Hu</span>
-      </p> -->
+      <p class="subtitle">
+        CS180 Project 0 - Isabella Hu
+      </p>
       <nav class="nav" aria-label="Primary">
-        <a href="#ideals">CS180 Project 0</a>
-        <a href="#gallery">Isabella Hu</a>
+        <a href="#explanation">CS180 Project 0</a>
+        <a href="#examples">Isabella Hu</a>
       </nav>
     </div>
   </header>
 
   <main class="container" role="main">
-    <section id="ideals">
-      <h2>Selfie: The Wrong Way vs. The Right Way</h2>
+    <section id="explanation">
+      <h2>Part 1: Selfie: The Wrong Way vs. The Right Way</h2>
       <p class="lead">
-        The prespective distortion is due to the exaggerated perspective effect. 
-        When the object is closer to the phone, the phone's camera uses a short focal length (wide-angle lens) with a large Field of View. 
-        Since the object distance is small, the relative distance from lens to the closes feature vs. lens to furthest feature is large. 
-        Hence this large relative distance result the closer features to be rendered disproportionately larger than the further one, resulting in perspective distortion. 
-        On the other hand, when the picture zoomed in, phone's camera adjust to a telephoto or portrait lens setting, you compensate for stepping back and keep the face the same size in the frame. 
-        And since the relative difference is samll, facial featuers does not have tis exaggerated effect. 
+        Perspective distortion occurs due to the exaggerated perspective effect when using a wide-angle lens up close. When the object is closer to the phone, the camera uses a short focal length with a large Field of View. Since the object distance is small, the relative distance from the lens to the closest feature vs. the furthest feature is large. This results in closer features being rendered disproportionately larger than further ones, creating perspective distortion.
+      </p>
+      
+      <p class="lead">
+        On the other hand, when you zoom in, the camera adjusts to a telephoto or portrait lens setting. By stepping back and zooming in to keep the face the same size in the frame, the relative distance difference becomes smaller, and facial features don't have this exaggerated effect.
+      </p>
+   
+      <h2>Image Examples</h2>
+        <style>
+        .image-table img {
+            width: 150px;  
+            height: 200px;  
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+        </style>
 
+        <table class="image-table">
+        <tr>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/IMG_8507.jpg" style = "transform:scale(0.9) translateY(-10px)"></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/IMG_8508.jpg" style = transform:scale(0.9)></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/IMG_8532.jpg" style = "transform:scale(0.9) translateY(10px)"></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/IMG_8509.jpg" style = "transform:scale(0.9) translateY(3px)"></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/IMG_8514.png" style = "transform:scale(1) translateY(0px)"></td>
+        </tr>
+        <tr>
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;">Close-up wide angle</td>
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;"></td>            
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;"></td>
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;"></td>
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;">Telephoto lens</td>
+        </tr>
+        </table>
 
-        </p>
-
+      <!-- <blockquote class="pullquote">"When you understand perspective distortion, you can take more flattering portraits."</blockquote> -->
       <div class="flourish" aria-hidden="true">
         <svg width="160" height="20" viewBox="0 0 160 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2 10 C30 10, 30 2, 60 10 C90 18, 120 18, 150 10" stroke="rgba(194,164,101,.7)" stroke-width="1.2" fill="none"/>
           <circle cx="80" cy="10" r="3" fill="rgba(194,164,101,.7)"/>
         </svg>
       </div>
+    </section>
 
+    <section id="explanation">
+      <h2>Part 2: Architectural Perspective Compression</h2>
+      <p class="lead">
+        Perspective distortion occurs due to the exaggerated perspective effect when using a wide-angle lens up close. When the object is closer to the phone, the camera uses a short focal length with a large Field of View. Since the object distance is small, the relative distance from the lens to the closest feature vs. the furthest feature is large. This results in closer features being rendered disproportionately larger than further ones, creating perspective distortion.
+      </p>
       
-      <div class="grid">
-        <div class="card reveal" style="grid-column: span 12; padding:0; overflow:hidden;">
-            <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
-            <tr>
-                <td><img src="https://github.com/IHU3025/IHU3025.github.io/blob/614f460cbdee7d61ef824ce15e4e47dd226a9a5a/project0/media/IMG_8507.jpg" alt="Image 1" style="width:100%; display:block;"/></td>
-                <td><img src="https://github.com/IHU3025/IHU3025.github.io/blob/614f460cbdee7d61ef824ce15e4e47dd226a9a5a/project0/media/IMG_8508.jpg" alt="Image 2" style="width:100%; display:block;"/></td>
-                <td><img src="https://github.com/IHU3025/IHU3025.github.io/blob/614f460cbdee7d61ef824ce15e4e47dd226a9a5a/project0/media/IMG_8532.jpg" alt="Image 3" style="width:100%; display:block;"/></td>
-                <td><img src="https://github.com/IHU3025/IHU3025.github.io/blob/614f460cbdee7d61ef824ce15e4e47dd226a9a5a/project0/media/IMG_8509.jpg" alt="Image 4" style="width:100%; display:block;"/></td>
-                <td><img src="https://github.com/IHU3025/IHU3025.github.io/blob/614f460cbdee7d61ef824ce15e4e47dd226a9a5a/project0/media/IMG_8514.png" alt="Image 5" style="width:100%; display:block;"/></td>
-            </tr>
-            </table>
-        </div>
-    </div>
+      <p class="lead">
+        On the other hand, when you zoom in, the camera adjusts to a telephoto or portrait lens setting. By stepping back and zooming in to keep the face the same size in the frame, the relative distance difference becomes smaller, and facial features don't have this exaggerated effect.
+      </p>
+   
+      <h2>Image Examples</h2>
+      <p class="lead">The following images demonstrate the difference between close-up photos and those taken from a distance with zoom.</p>
 
+        <style>
+        .image-table img {
+            width: 150px;  
+            height: 200px;  
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+        </style>
 
-      <blockquote class="pullquote reveal">“When style bows to meaning, both are crowned.”</blockquote>
-    </section>
+        <table class="image-table">
+        <tr>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io\project0\media\Weixin Image_20250902190455.jpg" style = "transform:scale(0.9) translateY(-10px)"></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io\project0\media\Weixin Image_20250902190501.jpg" style = transform:scale(0.9)></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io\project0\media\Weixin Image_20250902190506.jpg" style = "transform:scale(0.9) translateY(10px)"></td>
+            <td><img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io\project0\media\Weixin Image_20250902191503.jpg" style = "transform:scale(0.9) translateY(3px)"></td>
+        </tr>
+        <tr>
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;">Close-up wide angle</td>
+            <td style="text-align: center; padding: 8px; font-size: 1.1rem; color: var(--paper); font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;">—→</td>            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;">Comparison</td>
+            <td style="text-align: center; padding: 8px; color: var(--paper); font-size: 0.9rem;">Explanation diagram</td>
+        </tr>
+        </table>
 
-    <section id="gallery">
-      <h2>Galerie: Hints of an Oil-Painted World</h2>
-      <p class="lead">Bring your own imagery; the gallery applies a tasteful sepia glaze to harmonize with the palette. Captions are set in warm ink on parchment.</p>
-
-      <div class="gallery">
-        <figure class="reveal">
-          <img src="https://images.unsplash.com/photo-1520697222860-7b34f4b7b6b3?q=80&w=1200&auto=format&fit=crop" alt="Aged parchment maps and quill."/>
-          <figcaption>Cartography &amp; Correspondence</figcaption>
-        </figure>
-        <figure class="reveal">
-          <img src="https://images.unsplash.com/photo-1546549039-84ab6c1d2f5e?q=80&w=1200&auto=format&fit=crop" alt="Classical bust lit by candle."/>
-          <figcaption>Reason in Candlelight</figcaption>
-        </figure>
+      <!-- <blockquote class="pullquote">"When you understand perspective distortion, you can take more flattering portraits."</blockquote> -->
+      <div class="flourish" aria-hidden="true">
+        <svg width="160" height="20" viewBox="0 0 160 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 10 C30 10, 30 2, 60 10 C90 18, 120 18, 150 10" stroke="rgba(194,164,101,.7)" stroke-width="1.2" fill="none"/>
+          <circle cx="80" cy="10" r="3" fill="rgba(194,164,101,.7)"/>
+        </svg>
       </div>
     </section>
 
-    <!-- <section id="timeline">
-      <h2>Chronologie: A Gentle March of Events</h2>
-      <div class="timeline">
-        <div class="event reveal">
-          <div class="date">1789</div>
-          <div class="desc">The page turns. New declarations draft the contours of a different dawn.</div>
+    <section id="timeline">
+        <h2>Part 3: The Dolly Zoom</h2>
+        <div class="timeline">
+            <div class="event reveal">
+                <div class="date">Dolly Zoom Effect</div>
+                <div class="desc">
+                    <img src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/DollyZoom.gif" />     
+            </div>
+            </div>
+            <div class="event reveal">
+                <div class="date">Dolly Zoom Video</div>
+                <div class="desc">
+                    <video controls style="width:30%; border-radius:8px; display:block; margin: 0 auto;">
+                        <source src="https://raw.githubusercontent.com/IHU3025/IHU3025.github.io/main/project0/media/IMG_8541.mov" type="video/mp4">
+                </div>
+            </div>
         </div>
-        <div class="event reveal">
-          <div class="date">1791</div>
-          <div class="desc">Articles bloom like laurel leaves; the ink is still drying.</div>
-        </div>
-        <div class="event reveal">
-          <div class="date">1793</div>
-          <div class="desc">Tempest and conviction—storm fronts pass, ideals remain.</div>
-        </div>
-      </div>
-    </section> -->
-
-    <section id="contact" class="ornate" style="padding:2rem; margin: 3rem 0;">
-      <h2>Correspondance</h2>
-      <p class="lead">Leave a note as one might seal a letter with wax—measured, deliberate, and addressed with care.</p>
-      <form class="reveal" style="display:grid; gap:1rem; grid-template-columns: repeat(2,1fr);">
-        <label style="grid-column: span 1; display:flex; flex-direction:column; color:#e9dec9;">
-          Nom
-          <input type="text" placeholder="Camille" style="margin-top:.4rem; background: rgba(227,216,198,.08); border:1px solid var(--border); border-radius:10px; padding:.7rem 1rem; color:#eadfcd;" />
-        </label>
-        <label style="grid-column: span 1; display:flex; flex-direction:column; color:#e9dec9;">
-          Courriel
-          <input type="email" placeholder="camille@salon.fr" style="margin-top:.4rem; background: rgba(227,216,198,.08); border:1px solid var(--border); border-radius:10px; padding:.7rem 1rem; color:#eadfcd;" />
-        </label>
-        <label style="grid-column: span 2; display:flex; flex-direction:column; color:#e9dec9;">
-          Message
-          <textarea rows="4" placeholder="Votre message…" style="margin-top:.4rem; background: rgba(227,216,198,.08); border:1px solid var(--border); border-radius:12px; padding:1rem; color:#eadfcd;"></textarea>
-        </label>
-        <button type="submit" style="grid-column: span 2; justify-self:start; padding:.75rem 1.2rem; border-radius:999px; border:1px solid rgba(255,255,255,.1); background: linear-gradient(180deg, rgba(194,164,101,.22), rgba(123,47,42,.22)); color:#eadfcd; box-shadow: 0 10px 24px var(--shadow), inset 0 0 0 1px rgba(0,0,0,.25);">Sceller la Lettre</button>
-      </form>
     </section>
+
+
   </main>
 
+  <footer class="container">
+    <p>CS180 Project 0 - Photography Principles | Isabella Hu</p>
+  </footer>
 
- 
+  <script>
+    // Simple reveal animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const reveals = document.querySelectorAll('.reveal');
+      
+      function checkReveal() {
+        reveals.forEach(element => {
+          const windowHeight = window.innerHeight;
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+          
+          if (elementTop < windowHeight - elementVisible) {
+            element.classList.add('visible');
+          }
+        });
+      }
+      
+      window.addEventListener('scroll', checkReveal);
+      checkReveal(); // Check on initial load
+    });
+  </script>
 </body>
 </html>
