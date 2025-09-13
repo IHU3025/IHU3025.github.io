@@ -1,0 +1,13 @@
+install the following packages
+
+numpy
+scikit-image
+matplotlib
+opencv-python
+Pillow
+
+
+create and activate a virtual environement
+
+
+run main.ipynb
