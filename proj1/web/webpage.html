@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prokudin-Gorskii Image Alignment</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --text-color: #333;
+            --spacing: 2rem;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            color: #2c3e50;
+            text-align: center;
+            padding: 3rem 1rem;
+            padding-top: 3rem; 
+
+            margin-top: 4rem; 
+            margin-bottom: var(--spacing);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            margin-bottom: var(--spacing);
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .overview p, .approach p {
+            margin-bottom: 1rem;
+        }
+        
+        .image-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .image-table td {
+            width: 50%;
+            padding: 1rem;
+            vertical-align: top;
+        }
+        
+        .image-table img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-table .caption {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        .image-slider {
+            margin: 2rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .slider-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .slider-content {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--light-color);
+        }
+        
+        .slider-nav {
+            font-size: 2rem;
+            padding: 0 1rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            user-select: none;
+        }
+        
+        .slider-nav:hover {
+            color: var(--dark-color);
+        }
+        
+        .slider-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .slider-image img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 4px;
+        }
+        
+        .slider-caption {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .problems-list {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .problems-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .inner-list li {
+            margin-top: 10px;
+            margin-left: 20px;
+            line-height: 1.2;
+        }
+        
+        .bells-whistles {
+            margin-left: 2rem;
+        }
+        
+        .bells-whistles li {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: var(--spacing);
+        }
+        
+        @media (max-width: 768px) {
+            .image-table, .image-table tbody, .image-table tr, .image-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .image-table td {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Prokudin-Gorskii Image Alignment Project</h1>
+            <p>Color reconstruction from glass plate images using alignment algorithms</p>
+            <br>
+            <p>CS180 Project #1</p>
+            <p>Isabella Hu</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="overview">
+            <h2>Project Overview</h2>
+            <p>This project focuses on using algorithm aligning the three color channels (red, green, blue) 
+                from Sergei Prokudin-Gorskii's monochromatic glass plate images (captured in early 20th century
+                through special camera that take three exposures through each of the red, green, and blue filters
+                ) to recreate 
+                the original colored photographs. 
+                 The challenge is to test out and compare different algorithm, to see which one resutled the 
+                best alignment across all images. </p>
+
+        </section>
+        
+        <section class="approach">
+            <h2>Metrics</h2>
+            <p>To solve the alignment problem, I implemented and compared three different metrics:</p>
+            <ol>
+                <li><strong>L1 (Sum of Absolute Differences)</strong> - Measures the sum of absolute differences between pixel values</li>
+                <li><strong>L2 (Sum of Squared Differences)</strong> - Measures the sum of squared differences between pixel values</li>
+                <!-- <li><strong>NCC (Normalized Cross-Correlation)</strong> - Measures normalized correlation between image patches</li> -->
+                <li><strong>Edge SSD (Sum of Squared Differences for Edge Magnitude)</strong> - Measures the sum of squared differences between gradient magnitude (calculated using Sobel filters) </li>
+            </ol>
+            <p>For each image, the blue channel was used as the reference, and the program aligns the green and red channels to it by searching for offsets that minimized the chosen metric
+                 within a specified search range (15 pixels). A image pyramid approach was used to handle larger displacements efficiently.</p>
+            <p>After alignment, images were cropped to remove borders resulted by the alignment process, and the aligned channels are stacked together to create the final RGB</p>
+        </section>
+        
+
+        <section class="results">
+            <h2>L2 Result for Single-Scale</h2>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/cathedral_aligned_L2_1757740693.jpg" >
+                        <div class="caption">Cathedral.jpg - Green offset: (5, 2), Red offset: (12, 3)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/tobolsk_aligned_L2_1757668740.jpg">
+                        <div class="caption">Tobolsk.jpg - Green offset: (3, 2), Red offset: (6, 3)</div>
+                    </td>  
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/monastery_aligned_L2_1757668915.jpg" >
+                        <div class="caption">Monastery.jpg - Green offset: (3, 2), Red offset: (6, 3)</div>
+                    </td>
+                    
+                </tr>
+    
+              
+                
+            </table>
+            <section class="problems">
+            <h2>Signle-Scale Alignment Approach</h2>
+            <p>The single-scale alignment function <code>find_best_offset</code> performs an exhaustive search to find the 
+                optimal offset between two image channels. I used the blue channel as reference, and match the green and red channel
+                to it by shifting the optimal amount. 
+            </p>
+                <ul class="bells-whistles">
+                    <li>
+                        <strong>implementation:</strong> 
+                        <ul class = "inner-list">
+                            <li>Exhaustive testing: Evaluates all possible combinations of horizontal and vertical shifts (dx, dy) within a search_range
+                                centered around an initial guess which is set to (0,0)</li>
+                            <li>Metric optimization: Use the passed in <code>filter_func</code> to measure alignment quality</li>
+                            <li>Edge Handling: Crop <code>search_range + 5</code> from a edges to eliminate the wrapping artifact resulted from <code>np.roll</code></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            
+          
+        <section class="results">
+            <h2>L2 Result for Multi-Scale</h2>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/cathedral_aligned_L2_1757662294.jpg">
+                        <div class="caption">Cathedral.jpg - Green offset: (5, 2), Red offset: (12, 3)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/three_generations_aligned_L2_1757679101.jpg">
+                        <div class="caption">Three_generation.tif - Green offset: (52, 5), Red offset: (110, 7)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/tobolsk_aligned_L2_1757668740.jpg" >
+                        <div class="caption">Tobolsk.jpg - Green offset: (3, 2), Red offset: (6, 3)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/siren_aligned_L2_1757736032.jpg">
+                        <div class="caption">Siren.tif - Green offset: (48, -8), Red offset: (96, -24)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/church_aligned_L2f_17576745751.jpg" >
+                        <div class="caption">Church.tif - Green offset: (25, -2), Red offset: (61, -14)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/emir_aligned_L2f_1757674925.jpg" >
+                        <div class="caption">Emir.tif - Green offset: (36, 17), Red offset: (107, -24)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/harvesters_aligned_L2f_1757737563.jpg" >
+                        <div class="caption">Harvesters.tif - Green offset: (57, 16), Red offset: (123, 13)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/icon_aligned_L2_1757724729.jpg">
+                        <div class="caption">Icon.tif - Green offset: (40, 15), Red offset: (90, 23)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/Italil_aligned_L2_1757736826.jpg" >
+                        <div class="caption">Italil.tif - Green offset: (39, 22), Red offset: (79, 36)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/lastochikino_aligned_L2_1757677594.jpg" >
+                        <div class="caption">Lastochikino.tif - Green offset: (-3, -3), Red offset: (74, -8)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/lugano_aligned_L2f_1757731701.jpg" >
+                        <div class="caption">Lugano.tif - Green offset: (41, -11), Red offset: (93, -20)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/self_portrait_aligned_L2f_17577357071.jpg">
+                        <div class="caption">Self_portrait.tif - Green offset: (76, 25), Red offset: (173, 34)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./photos/monastery_aligned_L2_1757668915.jpg" >
+                        <div class="caption">Monastery.jpg - Green offset: (3, 2), Red offset: (6, 3)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/melons_aligned_L2f_1757733887.jpg" >
+                        <div class="caption">Melons.tif - Green offset: (78, 5), Red offset: (176, 10)</div>
+                    </td>
+                </tr>
+                
+            </table>
+            
+            <h3>Algorithm Comparison</h3>            
+            <div class="image-slider">
+                <div class="slider-header">More Examples from the Prokudin-Gorskii collections</div>
+                <div class="slider-content">
+                    <div class="slider-nav" onclick="changeImage(-1, 0)">❮</div>
+                    <div class="slider-image">
+                        <img id="slider-image-0" src="./photos/alignment_comparison_1757724284.jpg" alt="L1 Alignment Image 1">
+                    </div>
+                    <div class="slider-nav" onclick="changeImage(1, 0)">❯</div>
+                </div>
+            </div>
+            
+           
+        </section>
+            <section class="problems">
+            <h2>Multi-Scale Implemntaion</h2>
+            <ul class="bells-whistles">
+                <li>
+                    <strong>Image Pyramid:</strong> A multi-scale pyramid approach <code>find_best_offset_pyramid</code >to handle large displacements efficiently.
+                    <ul class = "inner-list">
+                        <li>Process image from low to high resolution through a coarse-to-fine strategy on the image pyramid.</li> 
+                        <li>Caculate the optimal pyramid level using <code>max(3, int(np.log2(min_size / 100)) + 1)</code>
+                        <li>Downsample the image by appling Gaussian blurring with 3×3 kernel and subsample by a factor of 2 to prevent aliasing  </li>
+                        <li>Repeat the previous process to create a image prymaid where each level representing the image at half the resolution
+                        <li>Use bottom up alignment strategy, finds the optimal offset at the lowest resolution first, and refines the 
+                            offset estimate at higher resolution using a smaller refinement window(2/3 pixels). </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Channel Alignment:</strong> 
+                    <ul class = "inner-list">
+                        <li>Call the <code>find_best_offset_pyramid</code> for both red and green channel, and shift each channel by the corresponding amount</li>
+                        <li>Identifies the largest horizontal and vertical offsets across both channels to determine the cropping boundary</li>
+                        <li>After cropping, assemble the aligned image by stacking and convert back to the original data type</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Metrics Comparison</strong> 
+                    <ul class = "inner-list">
+                        <li> L1: Has the most consistent performance and highest accuracy
+                             across the majority of test images</li>
+                        <li> L2: Showed some inconsistent performance that varied across different images. 
+                            Especially failed on the Emir photo, which might due to the squared term excessively penalized the high-contrast patterns in the traditional 
+                            clothing, causing the algorithm be distracted by alignment-irrelevant pattern mismatches.</li>
+                        <li>Edge SSD: Similar to L2, Edge SSD also showed some inconsitency varied across images. It failed on the Harvesters photo, which might due to
+                             the agricultural scene contained many edges from plants, people, landscape etc, which lacked a distinct silhouettes or strong structural features, 
+                             causing the edge-based metric to struggle with finding meaningful alignment cues.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        
+        <section class="problems">
+            <h2>Challenges and Solutions</h2>
+            <p>During the implementation, several challenges were encountered:</p>
+            <ul class="problems-list">
+                <li><strong>Cropping:</strong>
+                    <ol class ="inner-list">
+                        <li> In the <code>find_best_offset</code> function, we use <code>np.roll</code> for pixel shifting, which circularly wraps shifted pixels 
+                            from one edge of the image to the opposite edge. These wrapped pixels do not correspond to the
+                            meaningful content and would inflate the similarity metric score. Sometimes resulting the correct alignment 
+                            offset to appear worse due to these unrelated pixel comparisons. To resolve this, I need to crop the image 
+                            edges where wrapping occurs before computing the similarity metric, so the metric scores are calculated from the valid region . 
+
+                    </ol>
+                </li>
+                <li>
+                    <strong>Search window offset:</strong> 
+                    <ol class ="inner-list">
+                        <li> In inside the <code>find_best_offset_pyramid</code> function, when determining the search_range to pass in for the
+                            next recursive call (one level down). I initially use <code>search_range//2</code> which reduces the range logarithmically, resulting a 
+                            small search window in the lowest level and unable to find the desired offset, hence I used  <code>max(3, ..)</code> to ensure
+                             we still search a reasonable minimum range. (The min value also have a effect on the accuracy of the alignment)
+                        
+                        
+                        <li>Also within the <code>find_best_offset_pyramid</code>, I initially made the refinement window too large using a range_offset thats
+                            proportional to the search_range, resulting unneccesary checking and slow runtime. As a result, I keep the range_offset constant.
+                           
+
+                    </ol>
+                </li>
+                <li><strong>Exposure differences:</strong> Some channels had different exposure levels, making alignment difficult. Therefore I normalized the channels before processing to yield better metric score</li>
+                <li><strong>Balance between Accuracy and Computational complexity:</strong> For example determine the min value for the refinement window, if the value is too high, it takes longer to run</li>
+            </ul>
+        </section>
+        
+    
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Prokudin-Gorskii Image Alignment Project</p>
+            <p>Computational Photography - 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Image data for sliders
+        const imageSets = [
+            [
+                {src: "./photos/alignment_comparison_1757725173.jpg"},
+                {src: "./photos/alignment_comparison_1757724521.jpg"},
+                {src: "./photos/alignment_comparison_1757725158.jpg"},
+                {src: "./photos/alignment_comparison_1757725138.jpg"},
+                {src: "./photos/alignment_comparison_1757725233.jpg"},
+                {src: "./photos/alignment_comparison_1757724284.jpg"},
+
+
+            ],
+            
+        ];
+        
+        const currentIndices = [0, 0, 0, 0];
+        
+        function changeImage(direction, sliderIndex) {
+            currentIndices[sliderIndex] += direction;
+            
+            // Wrap around
+            if (currentIndices[sliderIndex] < 0) {
+                currentIndices[sliderIndex] = imageSets[sliderIndex].length - 1;
+            } else if (currentIndices[sliderIndex] >= imageSets[sliderIndex].length) {
+                currentIndices[sliderIndex] = 0;
+            }
+            
+            // Update image and caption
+            const imageElement = document.getElementById(`slider-image-${sliderIndex}`);
+            imageElement.src = imageSets[sliderIndex][currentIndices[sliderIndex]].src;
+            imageElement.alt = `Alignment Image ${currentIndices[sliderIndex] + 1}`;
+            
+            // Update caption
+            const captionElement = imageElement.nextElementSibling;
+            captionElement.textContent = imageSets[sliderIndex][currentIndices[sliderIndex]].caption;
+        }
+    </script>
+</body>
+</html>
