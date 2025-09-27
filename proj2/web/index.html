@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun with Filters and Frequencies</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --text-color: #333;
+            --spacing: 2rem;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            color: #2c3e50;
+            text-align: center;
+            padding: 3rem 1rem;
+            padding-top: 3rem; 
+            margin-top: 4rem; 
+            margin-bottom: var(--spacing);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            margin-bottom: var(--spacing);
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .overview p, .approach p {
+            margin-bottom: 1rem;
+        }
+        
+        .image-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .image-table td {
+            width: 50%;
+            padding: 1rem;
+            vertical-align: top;
+        }
+        
+        .image-table img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-table .caption {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        .image-slider {
+            margin: 2rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .slider-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .slider-content {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--light-color);
+        }
+        
+        .slider-nav {
+            font-size: 2rem;
+            padding: 0 1rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            user-select: none;
+        }
+        
+        .slider-nav:hover {
+            color: var(--dark-color);
+        }
+        
+        .slider-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .slider-image img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 4px;
+        }
+        
+        .slider-caption {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .problems-list {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .problems-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .inner-list li {
+            margin-top: 10px;
+            margin-left: 20px;
+            line-height: 1.2;
+        }
+        
+        .bells-whistles {
+            margin-left: 2rem;
+        }
+        
+        .bells-whistles li {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: var(--spacing);
+        }
+        
+        @media (max-width: 768px) {
+            .image-table, .image-table tbody, .image-table tr, .image-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .image-table td {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Fun with Filters and Frequencies</h1>
+            <p>Image Processing with Convolutions and Multi-Resolution Techniques</p>
+            <br>
+            <p>CS180 Project #2</p>
+            <p>Isabella Hu</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="overview">
+            <h2>Project Overview</h2>
+            <p>This project explores fundamental image processing techniques including convolution, edge sharpening, image sharpening, hybrid image creation, and multi-resolution blending.</p>
+        </section>
+        
+        <section class="part1">
+            <h2>Part 1: Fun with Filters</h2>
+            
+            <h3>Part 1.1: Convolutions from Scratch</h3>
+            <p>I implemented convolution with four nested loops (Two nested loops iterate over each pixel (x, y) in the output image to assign its value, while another pair of nested loops traverse 
+                every pixel in the filter to compute the average color for the output pixel) and 
+                then optimized the inner two loops to element-wise multiplication: 
+            </p>
+            <p class="slider-image "><br><code>process = padded_image[i:i+filter_h, j:j+filter_w]</code> <br>
+            <code>output[i, j] = np.sum(process * filter)</code></p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/t1_1.1/1.1_box_our_1758614048.jpg" alt="Box filter result">
+                        <div class="caption">Image convolved with custom 9x9 box filter</div>
+                    </td>
+                     <td>
+                        <img src="./photos/t1_1.1/1.1_box_scipy_1758614048.jpg" alt="Box filter result">
+                        <div class="caption">Image convolved with scipy 9x9 box filter</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+            <tr>
+                    <td>
+                        <img src="./photos/t1_1.1/convolution_comparison_1758614048.jpg" alt="Box filter result">
+                        <div class="caption">Convolution Runtime Comparison</div>
+                    </td>
+                   
+                </tr>
+            </table>
+            
+            <h4>Implementation Details:</h4>
+            <ul class="bells-whistles">
+                <li><strong>Four-loop implementation:</strong> implementation with four nested loops for image height, width, and kernel height, width</li>
+                <li><strong>Two-loop optimization:</strong> Used numpy element-wise multiplication operations to simplify the inner two loops</li>
+                <li><strong>Padding:</strong> Implemented zero-padding using numpy: <code>np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant', constant_values=0)
+                </code> with <code>pad_h = filter_h//2</code> and <code>pad_w = filter_w//2</code></li>
+                <li><strong>Comparison with scipy:</strong> My implementation produces identical results to scipy.signal.convolve2d but is significantly slower due to python loops</li>
+            </ul>
+            
+            <h3>Part 1.2: Finite Difference Operator</h3>
+            <p>Applying finite difference operators Dx = [1, 0, -1] and Dy = [1, 0, -1].T to detect edges in the cameraman image.</p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/1.2/convolution_comparison_1758615673.jpg">
+                        <div class="caption">Partial derivative in x-direction and y-direction</div>
+                    </td>
+                </tr>
+            </table>
+             <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/1.2/1.2_magnitude_1758617004.jpg" alt="Gradient magnitude">
+                        <div class="caption">Gradient magnitude image</div>
+                    </td>
+                    <td>
+                        <img src="./photos/1.2/binary_edges.jpg" alt="Binary edges">
+                        <div class="caption">Binarized edges (Best result: threshold = 85)</div>
+                    </td>
+                </tr>
+            </table>
+             <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/1.2/edge_comparison_1758617004.jpg">
+                        <div class="caption">Edge comparison amongst different threshold</div>
+                    </td>
+                </tr>
+            </table>
+            <p>The comparison showed threshold range from 70 to 90 produced the best result balancing the noise while showing real edge</p>
+            <br>
+            <h3>Part 1.3: Derivative of Gaussian (DoG) Filter</h3>
+            <p>By appling Gaussian smoothing before computing derivatives (DoG filter), the noise 
+                in the binarized edge image is significantly reduced.</p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/1.3/DoG_threshold20.jpg">
+                        <div class="caption">Edges with and without Gaussian blur (threshold = 20)</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/1.3/DoG_two_method_1758620722.jpg">
+                        <div class="caption">Two Step Result vs. One Convolution Result (threshold = 50)</div>
+                    </td>
+                </tr>
+            </table>
+            
+            <h4>Implementation Details:</h4>
+            <ul class="bells-whistles">
+                <li><strong>Two step Derivative of Gaussian Filter:</strong> Created using cv2.getGaussianKernel() with outer product to create the gaussian filter, applying the filter to the image first then convolve the blurred 
+                image with the finite difference operator:</li>
+                <p class="slider-image "><br>
+                    <code>gaussian = gaussian_filter(sigma=1.5, size=9)</code><br>
+                    <code>blurred = convolve2d(img, gaussian, mode='same')</code><br>
+                    <code>Ix_two_step = convolve2d(blurred, Dx, mode='same')</code><br>
+                    <code>Iy_two_step = convolve2d(blurred, Dy, mode='same') </code><br>
+                    <code>edges_two_step = np.sqrt(Ix_two_step**2 + Iy_two_step**2) > 50</code><br>
+                <p><br>
+                <li><strong>DoG filter:</strong> Since convolution is associative, we can acheive the same result by convolved Gaussian kernel with finite difference operators to get the DoG Kernel: 
+                </li>
+                <p class="slider-image ">
+                    <code>DoG_x = convolve2d(gaussian, Dx, mode='full') </code><br>
+                    <code>DoG_y = convolve2d(gaussian, Dy, mode='full') </code><br>
+                <p><br>
+            </ul>
+        </section>
+        
+        <section class="part2">
+            <h2>Part 2: Fun with Frequencies!</h2>
+            
+            <h3>Part 2.1: Image "Sharpening"</h3>
+            <p>Implemented unsharp masking to enhance image details by amplifying high-frequency components.</p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.1/DoG_two_method_1758700657.jpg" >
+                        <div class="caption"> Taj Mahal Image Sharpening</div>
+                    </td>     
+                </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.1/sharpen1.jpg" >
+                        <div class="caption"> Example 1 Sharpening</div>
+                    </td>     
+                </tr>
+            </table>
+             <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.1/shapren2.jpg" >
+                        <div class="caption"> Example 2 Sharpening</div>
+                    </td>     
+                </tr>
+            </table>
+            
+            <h4>Implementation Details:</h4>
+            <ul class="bells-whistles">
+                <li><strong>Sharpening:</strong> implemented <code> gaussian_filtered </code> 
+                    function to blur the image. Then, the <code> high_freq </code> function 
+                    obtain the high frequency by subracting the blurred from the original image. After that the <code> sharpening_filter </code> function added high frequency by <code>sharpened =  img + alpha * high_freq(img)</code> and clip the sharpened image ensuring values are within the range of 0 to 255</li>
+                <li><strong>Evaluation results:</strong> This method does effectively made sharp image even sharper</li>
+                <li><strong>Unsharp masking:</strong> Since convlution is associative: I = I + α * (I - I_blurred)</li>
+                <p>
+                    <code>gaus_filter = gaussian_filter(sigma=1.5, size = 16)</code><br>
+                    <code>identity = np.zeros((size, size))</code><br>
+                    <code>center = size // 2</code><br>
+                    <code>identity[center, center] = 1.0  </code><br>
+                    <code># img + alpha * (img - gaus) = (1 + alpha) * img - alpha * gaus</code><br>
+                    <code>unsharp_filter = (1 + alpha) * identity - alpha * gaus_filter</code><br>
+
+
+
+
+                </p>
+            </ul>
+            <br>
+            <h4>Unsharp Mask Filter (Single Convolution Approach):</h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.1/sharpening_one_conv1_1758679989.jpg" >
+                        <div class="caption"> Taj Mahal Image: Two Step vs. Single Convolution</div>
+                    </td>     
+                </tr>
+            </table>
+             <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.1/sharpening_one_conv1_1758679445.jpg" >
+                        <div class="caption"> Example Image: Two Step vs. Single Convolution</div>
+                    </td>     
+                </tr>
+            </table>
+
+            <h3>Part 2.2: Hybrid Images</h3>
+            <p>Created hybrid images by combining low-frequency components of one image with high-frequency components of another.</p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../data/DerekPicture.jpg" alt="Derek" style="height:300px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption">Derek (low-frequency source)</div>
+                    </td>
+                    <td>
+                        <img src="../data/nutmeg.jpg" alt="Nutmeg" style="height:300px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption">Nutmeg (high-frequency source)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/2.2/cat_p1.png" alt="Hybrid" style="height:300px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption">Hybrid image (Alpha = 3)</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../data/RO.jpg" alt="Derek" style="height:300px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption"> Example 1 (low-frequency source)</div>
+                    </td>
+                    <td>
+                        <img src="../data/SJ.jpg" alt="Nutmeg" style="height:300px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption">Example 1 (high-frequency source)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/2.2Hybrid.jpg" alt="Hybrid" style="height:300px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption"> Example 1 Hybrid image (Alpha = 3)</div>
+                    </td>
+                </tr>
+            </table>
+            <!-- <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../data/jinx.jpg" alt="Derek" style="height:150px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption"> Example 2 (low-frequency source)</div>
+                    </td>
+                    <td>
+                        <img src="../data/powder.jpg" alt="Nutmeg" style="height:150px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption">Example 2 (high-frequency source)</div>
+                    </td>
+                    <td>
+                        <img src="./photos/morph2.jpg" alt="Hybrid" style="height:150px; width:auto; object-fit:cover; display:block;">
+                        <div class="caption"> Example 2 Hybrid image (Alpha = 3)</div>
+                    </td>
+                </tr>
+            </table> -->
+            
+            <h4>Frequency Analysis (Full Process):</h4>
+            <table class="image-table">
+               <tr>
+                    <td>
+                        <img src="./photos/2.2/enid_ag_show1.png" alt="FFT high pass">
+                        <div class="caption"> Example 2: Original, Fourier, Filtered Results </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+              <tr>
+                    <td>
+                       <img src="./photos/12345.png" alt="Hybrid">
+                        <div class="caption"> Example 2 Cutoff Frequency Choice Comparison</div>
+                    </td>
+              </tr>
+            </table>
+            <table class="image-table">
+              <tr>
+                    <td>
+                        <img src="./photos/1233345.png" alt="FFT low pass">
+                        <div class="caption"> Example 2 Alpha (High Frequency Weight) Comparison</div>
+                    </td>
+              </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td colspan="2">
+                        <img src="./photos/2.2/enid_ag_p1.png" alt="FFT hybrid">
+                        <div class="caption">Example 2: Hybrid Result (Alpha = 1)</div>
+                    </td>
+                </tr>
+            </table>
+            <!-- <h4>Implementation Details:</h4>
+            <ul class="bells-whistles">
+                <li><strong>Color Channels Handling:</strong> For RGB images, process each color channel independently though a for loop 
+                     <ul class="inner-list">
+                        <li><code>blended_level = lap_stack1[i] * mask_stack[i] + lap_stack2[i] * (1 - mask_stack[i])</code> utilizing numpy boardcasting</li>
+                    </ul>
+                </li> -->
+            
+
+
+
+            <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
+            <p>Constructed the Gaussian stack by successively applying Gaussian 
+                filtering at each level. The Laplacian stack was then generated by 
+                subtracting each level of the Gaussian stack from the next, capturing the 
+                frequency differences between each Gaussaian level.
+            </p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.3/180124356.png" alt="Oraple original">
+                        <div class="caption"> Gaussian and Laplacian Stack for Apple</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.3/18012323532.png" alt="Oraple original">
+                        <div class="caption"> Gaussian and Laplacian Stack for Orange</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/Gaussian_lap_stack_1758785811.jpg" alt= "Oraple original">
+                        <div class="caption"> Gaussian and Laplacian Stack for Custom Image</div>
+                    </td>
+                </tr>
+            </table>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/Gaussian_lap_stack_1758785868.jpg" alt="Oraple original">
+                        <div class="caption"> Gaussian and Laplacian Stack for Custom Image</div>
+                    </td>
+                </tr>
+            </table>
+            <p>PS: Laplacian Level 4 is same image as the Gaussian level 4, I clipped the Laplacian stack
+                for better display, so the color looks different.
+            </p>
+            <h4>Implementation Details:</h4>
+            <ul class="bells-whistles">
+                <li><strong>Gaussaian Construction:</strong> implemented <code>gaussian_stack()</code>
+                     function to successive apply Gaussian filters with increasing sigma values
+                     <ul class="inner-list">
+                        <li>Sigma multiplier increases the blur radius at each subsequent level</li>
+                        <li>Kernel size is calculated as <code>2 * ceil(3 * sigma) + 1</code> for coverage</li>
+                    </ul>
+                </li>
+                <li><strong>Laplacian Construction:</strong> Each Laplacian level = Gaussian<sub>i</sub> - Gaussian<sub>i+1</sub>, with the last
+                     level of the Laplacian stack contains the final Gaussian level.</li>
+                <p>
+                    <code>for i in range(len(gaussian_stack_list) - 1):</code><br>
+                    <code>      lap_level = gaussian_stack_list[i] - gaussian_stack_list[i + 1]</code><br>
+                    <code>      laplacian_stack_list.append(lap_level)</code><br>
+                 
+                </p>
+            </ul>
+            <h3>Part 2.4: Multiresolution Blending</h3>
+            <p></p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.3/stictch2.3appleorange_1758778586.jpg" alt="Oraple original">
+                        <div class="caption">Figure 3.42 Recreation</div>
+                    </td>
+                     <td>
+                        <img src="./photos/stictch2.3appleorange_1758883036.jpg" alt="Oraple original">
+                        <div class="caption">Custom blend with irregular mask</div>
+                    </td>
+            </table>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./photos/2.3/stictch2.3appleorange_1758784575.jpg" alt="Custom blend 1">
+                        <div class="caption">Custom blend with regular mask #1</div>
+                    </td>
+                    <td>
+                        <img src="./photos/2.3/stictch2.3appleorange_1758785629.jpg" alt="Custom blend 2">
+                        <div class="caption">Custom blend with regular mask #2</div>
+                    </td>
+                </tr>
+            </table>
+            <h4>Implementation Details:</h4>
+            <ul class="bells-whistles">
+                <li><strong>Color Handling:</strong> Generate Laplacian stack for both images and generate Gaussian stack for the mask. Then at each frequency level, blend Laplacian 
+                    details from both images using Gaussian-blurred mask weights.
+                     <ul class="inner-list">
+                        <li><code>blended_level = lap_stack1[i] * mask_stack[i] + lap_stack2[i] * (1 - mask_stack[i])</code> utilizing numpy boardcasting</li>
+                    </ul>
+                </li>
+               
+        </section>
+        <section class="key-learning">
+            <h3>Conclusion</h2>
+            <p>The most important thing I learned from this project was developing an 
+                intuitive understanding of images in the frequency domain. Through the Gaussian and Laplacian stacks implementation and working with freqency, 
+                I see how image are a composition of different frequency components</p>
+    
+        
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Fun with Filters and Frequencies Project</p>
+            <p>Computational Photography - 2025</p>
+        </div>
+    </footer>
+</body>
+</html>
