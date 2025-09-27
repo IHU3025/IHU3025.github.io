@@ -220,11 +220,11 @@
         
         <section class="approach">
             <h2>Metrics</h2>
-            <p>To solve the alignment problem, I implemented and compared three different metrics:</p>
+            <p>To solve the alignment problem, I implemented and compared four different metrics:</p>
             <ol>
                 <li><strong>L1 (Sum of Absolute Differences)</strong> - Measures the sum of absolute differences between pixel values</li>
                 <li><strong>L2 (Sum of Squared Differences)</strong> - Measures the sum of squared differences between pixel values</li>
-                <!-- <li><strong>NCC (Normalized Cross-Correlation)</strong> - Measures normalized correlation between image patches</li> -->
+                <li><strong>NCC (Normalized Cross-Correlation)</strong> - Measures normalized correlation between image patches</li> 
                 <li><strong>Edge SSD (Sum of Squared Differences for Edge Magnitude)</strong> - Measures the sum of squared differences between gradient magnitude (calculated using Sobel filters) </li>
             </ol>
             <p>For each image, the blue channel was used as the reference, and the program aligns the green and red channels to it by searching for offsets that minimized the chosen metric
@@ -234,7 +234,7 @@
         
 
         <section class="results">
-            <h2>L2 Result for Single-Scale</h2>
+            <h2>L2/NCC Result for Single-Scale</h2>
             
             <table class="image-table">
                 <tr>
@@ -279,7 +279,7 @@
             
           
         <section class="results">
-            <h2>L2 Result for Multi-Scale</h2>
+            <h2>L2/NCC Result for Multi-Scale</h2>
             
             <table class="image-table">
                 <tr>
@@ -399,6 +399,7 @@
                         <li> L2: Showed some inconsistent performance that varied across different images. 
                             Especially failed on the Emir photo, which might due to the squared term excessively penalized the high-contrast patterns in the traditional 
                             clothing, causing the algorithm be distracted by alignment-irrelevant pattern mismatches.</li>
+                        <li> NCC: Also has the most consistent performace and highest accuracy across the majority of test images.
                         <li>Edge SSD: Similar to L2, Edge SSD also showed some inconsitency varied across images. It failed on the Harvesters photo, which might due to
                              the agricultural scene contained many edges from plants, people, landscape etc, which lacked a distinct silhouettes or strong structural features, 
                              causing the edge-based metric to struggle with finding meaningful alignment cues.</li>
