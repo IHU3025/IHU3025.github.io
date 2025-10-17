@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature-Based Automatic Image Stitching</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --text-color: #333;
+            --spacing: 2rem;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            color: #2c3e50;
+            text-align: center;
+            padding: 3rem 1rem;
+            padding-top: 3rem; 
+            margin-top: 4rem; 
+            margin-bottom: var(--spacing);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            margin-bottom: var(--spacing);
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .overview p, .approach p {
+            margin-bottom: 1rem;
+        }
+        
+        .image-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .image-table td {
+            width: 50%;
+            padding: 1rem;
+            vertical-align: top;
+        }
+        
+        .image-table img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-table .caption {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .image-grid img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            justify-content: center;
+        }
+        
+        .problems-list {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .problems-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .inner-list li {
+            margin-top: 10px;
+            margin-left: 20px;
+            line-height: 1.2;
+        }
+        
+        .bells-whistles {
+            margin-left: 2rem;
+        }
+        
+        .bells-whistles li {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: var(--spacing);
+        }
+        
+        @media (max-width: 768px) {
+            .image-table, .image-table tbody, .image-table tr, .image-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .image-table td {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Stitching Photo Mosaics</h1>
+            <p>PART A: Creating Panoramas through Homography Estimation and Image Warping</p>
+            <p>PART B: Automated Panorama Creation using Harris Corner Detection and Feature Matching</p>
+            <br>
+            <p>CS180 Project #3</p>
+            <p>Isabella Hu</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="overview">
+            <h2>PART A: Image Mosaicing Project Overview</h2>
+            <p>This project explores image mosaicing by computing homographies between overlapping images, warping them into alignment, and blending to create seamless panoramas. All homography computation and image warping is implemented from scratch without using high-level computer vision libraries.</p>
+        </section>
+        
+        <section class="part1">
+            <h2>A.1: Shooting and Digitizing Pictures</h2>
+            <p>I captured multiple image sets with significant overlap (40-70%) while keeping the center of projection fixed by rotating the camera. This ensures the transformations between images are projective.</p>
+            
+            <h3>Image Set 1: Card</h3>
+            <div class="image-grid">
+                <div>
+                    <img src="../data/IMG_8828.jpg" alt="Indoor scene image 1">
+                    <div class="caption">Image 1 - Left view</div>
+                </div>
+                <div>
+                    <img src="../data/IMG_8829.jpg" alt="Indoor scene image 2">
+                    <div class="caption">Image 2 - Right view</div>
+                </div>
+            </div>
+            
+            <h3>Image Set 2: V&A Cafe</h3>
+            <div class="image-grid">
+                <div>
+                    <img src="../data/IMG_8849.jpg" alt="Outdoor scene image 1">
+                    <div class="caption">Image 1 - Left view</div>
+                </div>
+                <div>
+                    <img src="../data/IMG_8848.jpg" alt="Outdoor scene image 2">
+                    <div class="caption">Image 2 - Right view</div>
+                </div>
+            </div>
+            
+            <h3>Image Set 3: Campanile</h3>
+            <div class="image-grid">
+                <div>
+                    <img src="../data/IMG_8851r2.jpg" alt="Outdoor scene image 1">
+                    <div class="caption">Image 1 - Left view</div>
+                </div>
+                <div>
+                    <img src="../data/IMG_8852r2.jpg" alt="Outdoor scene image 2">
+                    <div class="caption">Image 2 - Right view</div>
+                </div>
+            </div>
+            <h3>Image Set 4: Campus</h3>
+            <div class="image-grid">
+                <div>
+                    <img src="../data/IMG_8862r.jpg" alt="Outdoor scene image 1">
+                    <div class="caption">Image 1 - Left view</div>
+                </div>
+                <div>
+                    <img src="../data/IMG_8863r.jpg" alt="Outdoor scene image 2">
+                    <div class="caption">Image 2 - Right view</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="part2">
+            <h2>A.2: Recovering Homographies</h2>
+            
+            <h3>Homography Computation Implementation</h3>
+            <p>I implemented homography computation using Direct Linear Transform. The homography matrix H
+                 transforms points from one image to another: p' = Hp, where p and p' are corresponding homogeneous points.</p>
+            
+            <h3>Mathematical Formulation</h3>
+            <p>The homography transformation is represented as:</p>
+            <div>
+            $$
+            \begin{bmatrix}
+            u \\
+            v \\
+            1
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            h_1 & h_2 & h_3 \\
+            h_4 & h_5 & h_6 \\
+            h_7 & h_8 & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+            x \\
+            y \\
+            1
+            \end{bmatrix}
+            $$
+            </div>
+
+            <p>We can rewrite the matrix equation into a system of equations:</p>
+            <ul class="problems-list">
+            \begin{align*}
+            u &= \frac{h_1 x + h_2 y + h_3}{h_7 x + h_8 y + 1} \\ \\
+            v &= \frac{h_4 x + h_5 y + h_6}{h_7 x + h_8 y + 1}
+            \end{align*}
+
+            </ul>
+
+            <p>Rearranging the previous equations we get:</p>
+            <ul class="problems-list">
+                \begin{align*}
+                h_1 x + h_2 y + h_3 - h_7 x u - h_8 y u &= u \\ \\
+                h_4 x + h_5 y + h_6 - h_7 x v - h_8 y v &= v
+                \end{align*}
+            </ul>
+
+            <h3>ComputeH function Implementation Steps</h3>
+            <div class="problems-list" >
+                <li><strong>Initialize matrix for the linear system, with A being the coefficient matrix with the shape of 2nx8 for n point pairs, and b being the target value (u, v)</strong><br></li>
+                <li><strong>Construct the system of equations:</strong><br>
+                    For each point correspondence, two equations are added (one for the x-coordinate and one for the y-coordinate):
+                    <div style="text-align: center;">
+                        <code>A.append([x, y, 1, 0, 0, 0, -xp*x, -xp*y])</code> <br>
+                        <code>b.append(xp)</code>  <br>
+                       <code>A.append([0, 0, 0, x, y, 1, -yp*x, -yp*y])</code>  <br>
+                        <code>b.append(yp)</code>  <br>
+                    </div>
+                    This builds a system with the form <code>A · h = b</code>, where <code>h</code> has the 8 unknown parameters we want to solve.
+                </li>
+                <li><strong>Convert lists to numpy arrays and solve the linear system:</strong><br>
+                    If the system is square, solve it with
+                    <code>h = np.linalg.solve(A, b)</code><br>
+                    Otherwise use least squares to find the best approximate solution: 
+                    <code>h = np.linalg.lstsq(A, b, rcond=None)[0]</code>
+                </li>
+
+
+            </div>
+
+            <h3>Point Correspondences Visualization</h3>
+            <p>Used manual point selection for point correspondences on the image pair:</p>
+            
+            <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                <th style="text-align: left; padding: 8px;">Left & Right Image Pair 1: </th>
+                <th style="text-align: left; padding: 8px;">Point Overlap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td style="padding: 8px;">
+                    <img src="../../proj3/web/10.7.26.png" alt="Point correspondences example 1" style="width:auto; height:220px; object-fit: cover;">
+                </td>
+                <td style="padding: 8px;">
+                    <img src="../../proj3/web/107.22.png" alt="Point correspondences overlap" style="width:300px; height:220px; object-fit: cover;">
+                </td>
+                </tr>
+            </tbody>
+            </table>
+            <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                <th style="text-align: left; padding: 8px;">Left & Right Image Pair 2: </th>
+                <th style="text-align: left; padding: 8px;">Point Overlap</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td style="padding: 8px;">
+                    <img src="../../proj3/web/10.7.27.png" alt="Point correspondences example 1" style="width:auto; height: 300px; object-fit: cover;">
+                </td>
+                <td style="padding: 8px;">
+                    <img src="../../proj3/web/10.6.1.png" alt="Point correspondences overlap" style="width:auto; height:350px; object-fit: cover;">
+                </td>
+                </tr>
+            </tbody>
+            </table>
+
+
+            <h3>Recovered Homography Example</h3>
+            <div class="code-block">
+                Image Pair 1 Homography Matrix:
+                $$
+                H =
+                \begin{bmatrix}
+                4.08473942 & -0.191870983 & -2319.59195 \\
+                1.17731529 & 2.95130775 & -1348.55957 \\
+                0.00167874623 & 0.0000889052940 & 1.0
+                \end{bmatrix}
+                $$
+                </div>
+             <div class="code-block">
+                Image Pair 2 Homography Matrix:
+                $$
+                H =
+                \begin{bmatrix}
+                0.587829631 & -0.0118531288 & 192.919110 \\
+                -0.548834751 & 0.906532296 & 620.639121 \\
+                -0.000204363659 & 0.0000546962171 & 1.0
+                \end{bmatrix}
+                $$
+                </div>
+
+
+        
+
+            
+        </section>
+        <section class="part3">
+            <h2>A.3: Warping Images</h2>
+            
+            <h3>Inverse Warping Implementation</h3>
+            <p>Implemented both nearest neighbor and bilinear interpolation from scratch using inverse warping to avoid holes in the output image.</p>
+            
+              <p>
+                The <code>warpImage(im, H, interp_func)</code> function performs inverse warping using a homography matrix <code>H</code> and an interpolation method <code>interp_func</code>. It computes the output bounds by 
+                calling the <code>get_output_size </code>function (which transforming the corners of the input image and find bounding box from the transformed corners) then maps each output pixel back to the source image using <code>H<sup>-1</sup></code>.
+                </p>
+
+            <h4>Alpha Channel and Bounds Management</h4>
+            <p> I used a mask to deal with output pixels that don't map to any input pixels: 
+            </p>
+            <div class="code-block">
+            mask = (x_src >= 0) &amp; (x_src &lt;= w_src-1) &amp; (y_src >= 0) &amp; (y_src &lt;= h_src-1)
+            </div>
+            <p>
+            Through this check, pixels outside the source image bounds are marked transparent in the alpha channel, and will not be displayed. 
+            </p>
+
+            <h3>Interpolation Methods</h3>
+
+            <h4>Nearest Neighbor Interpolation</h4>
+            <div>
+            The <code>nearest_neighbor_interp(im, x, y)</code> function 
+            rounds the input coordinates to the nearest integer pixel and returned the rounded pixel's value. 
+            </p> <br>
+
+            <h4>Bilinear Interpolation</h4>
+            <div> The
+            <code> bilinear_interp(im, x, y) </code>
+            computes a weighted average of four neighboring pixels.<br>
+            </p>
+            <div class="code-block">
+            \[
+            I(x, y) = (1 - dx)(1 - dy) \cdot I_{00} + dx(1 - dy) \cdot I_{10} + (1 - dx)dy \cdot I_{01} + dx \cdot dy \cdot I_{11}
+            \]
+            </div>
+            <p>Theoretically produces smoother results than Nearest Neighbor approach but is computationally more expensive.</p>
+
+                            
+                        
+            <h3>Image Rectification Examples</h3>
+            <p>Applied homography to rectify planar surfaces in images.</p>
+            
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../../proj3/web/10.8.2.png" alt="Before rectification">
+                        <div class="caption">Nearest Neighbor</div>
+                    </td>
+                    <td>
+                        <img src="../../proj3/web/10.8.3.png" alt="After rectification">
+                        <div class="caption">Bilinear Interpolation</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="../../proj3/web/10.8.1.png" alt="Before rectification">
+                        <div class="caption">Nearest Neighbor</div>
+                    </td>
+                    <td>
+                        <img src="../../proj3/web/10.7.29.png" alt="After rectification">
+                        <div class="caption">Bilinear Interpolation</div>
+                    </td>
+                </tr>
+            </table>
+           
+            
+            <h3>Interpolation Comparison</h3>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../../proj3/web/10.6.9.png" alt="Before rectification 2">
+                        <div class="caption">Nearest Neighbor</div>
+                    </td>
+                    <td>
+                        <img src="../../proj3/web/10.6.10.png" alt="After rectification 2">
+                        <div class="caption">Bilinear Interpolation</div>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../../proj3/web/10.7.13.png" alt="Nearest neighbor warp">
+                        <div class="caption">Nearest Neighbor</div>
+                    </td>
+                    <td>
+                        <img src="../../proj3/web/10.7.14.png" alt="Bilinear warp">
+                        <div class="caption">Bilinear Interpolation</div>
+                    </td>
+                </tr>
+            </table>
+             <h4>Comparison</h4>
+            <p>
+            Nearest neighbor is faster than bilinear interpolation. While bilinear theoretically yields better results, the difference is negligible in high-resolution images since both methods produce visually similar quality outputs.
+            </p><br>
+
+        </section>
+        
+        <section class="part4">
+            <h2>A.4: Blending Images into Mosaic</h2>
+            
+            <h3>Mosaic Construction Overview</h3>
+            <p>
+            This implementation constructs a mosaic from two images by:
+            </p>
+            <div class="problems-list" >
+            <ol>
+                <li>Aligning the second image to the first using a homography</li>
+                <li>Building smooth, distance-based blending masks for overlapping regions</li>
+                <li>Combining the two images using weighted averaging according to those masks</li>
+                <li>Automatically cropping the final mosaic to remove empty borders</li>
+            </ol>
+            </div>
+            <p>
+            The blending function uses Euclidean distance transforms to result 
+            smooth weights that favor pixels closer to the interior of each image region/ farther from the edge. 
+            </p>
+
+            <h3>Functions Implementation</h3>
+
+            The <code>create_blending_mask(warped_img, reference_img)</code> function produce a per pixel blending weight <code>alpha_mask</code> the two aligned images. The weight for <code>reference_img</code> is <code>1 - alpha_mask</code>.</p>
+            <div class="problems-list" >
+
+            <ul>
+            <li>Binary Masks: create <code>mask_warped</code> and <code>mask_reference</code> which are binary masks indicating which pixels contain valid image content (by checking if the pixel is none zero).</li>
+            <li>Distance Transforms: <code>dist_warped</code> and <code>dist_reference</code> are computed using <code>ndimage.distance_transform_edt</code>. It return the distance to the nearest background pixel for each valid pixel.</li>
+            <li>Alpha Calculation: For overlapping pixels, calculate the alpha by <code>alpha = dist_warped / (dist_warped + dist_reference)</code> which gives pixel weight correspond to their distance. 
+             </li>
+            <li>Pixels only belong to <code>warped_img</code> have alpha = 1.0. Pixels only belong to <code>reference_img</code> have alpha = 0.</li>
+            </ul>
+            </div><br>
+
+
+            The <code>blend_images_weighted(img1, img2, alpha_mask)</code> function 
+            blend two aligned RGB images into one using the alpha mask:
+            <div class="code-block"><code>
+                blended = img1 * alpha + img2 * (1 - alpha)
+               </code></div> 
+               
+            </li><br>
+            </ul>
+            The <code>compose_mosaic_distance_blend(img1, img2, H, interp_func)</code> warp <code>img2</code> into <code>img1</code>’s coordinate frame using homography <code>H</code>, get weights and blend accordingly, then crop the result.</p>
+             <div class="problems-list" >
+            <ul>
+            <li>Compute Bounding Box: Calculate the corners of <code>img1</code> and the transformed corners of <code>img2</code> using <code>H</code>. Stack and compute <code>min_x</code>, <code>min_y</code>, <code>max_x</code>, <code>max_y</code> to define the mosaic canvas size.</li>
+            <li>Construct translation matrix:
+                <div class="code-block">
+                T = [[1, 0, -min_x], [0, 1, -min_y], [0, 0, 1]]
+                </div>
+                Then adjust the homography so the transformed image land in the canvas: 
+                <div class="code-block">
+                H_adjusted = T @ H
+                </div>
+            </li>
+            <li>Warp img2: Use <code>warpImage(img2, H_adjusted, interp_func)</code> to warp <code>warped_img2</code> on the canvas.</li>
+            <li>Add img1: Initialize a zero canvas of shape <code>(mosaic_height, mosaic_width, 3)</code>. Paste <code>img1</code> into its canvas position using offset <code>(-min_x, -min_y)</code>.</li>
+            <li>Create Blending Mask and Blend the Overlapping Region:
+                <ul>
+                <li>Call <code>create_blending_mask(warped_rgb, canvas_region)</code> to compute <code>alpha_mask</code>.</li>
+                <li>Call <code>blend_images_weighted(warped_rgb, canvas_region, alpha_mask)</code> to compute <code>blended_region</code>.</li>
+                <li>Write <code>blended_region</code> back into the canvas.</li>
+                </ul>
+            </li>
+            <li>Auto-Crop Final Mosaic:
+                <ul>
+                <li>Compute <code>non_empty_mask</code> where any color channel is non-zero.</li>
+                <li>Determine minimal bounding rows/columns with content.</li>
+                <li>Add padding and clip to canvas boundaries. Then crop canvas to these bounds and return the final mosaic.</li>
+                </ul>
+            </li>
+            </ul>
+            </div>
+            </div>
+
+            
+            <h3>Mosaic Results</h3>
+
+            <h4>Mosaic 2: Outdoor Landscape</h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../data/IMG_8849.jpg" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Source images 1</div>
+                    </td>
+                     <td>
+                        <img src="../data/IMG_8848.jpg" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Source images 2</div>
+                    </td>
+                    <td>
+                        <img src="./10.7.6bilinear.png" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Final mosaic</div>
+                    </td>
+                </tr>
+            </table>
+            
+            <h4>Mosaic 2</h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../data/IMG_8862r.jpg" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Source images 1</div>
+                    </td>
+                     <td>
+                        <img src="../data/IMG_8863r.jpg" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Source images 2</div>
+                    </td>
+                    <td>
+                        <img src="./10.7.25.png" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Final mosaic</div>
+                    </td>
+                </tr>
+            </table>
+            
+        
+            
+            <h4>Mosaic 3: Building Facade</h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="../data/IMG_8852r2.jpg" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Source images 1</div>
+                    </td>
+                     <td>
+                        <img src="../data/IMG_8851r2.jpg" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Source images 2</div>
+                    </td>
+                    <td>
+                        <img src="./10.7.bilinear.png" style="width:300px; height:auto; object-fit: cover;">
+                        <div class="caption">Final mosaic</div>
+                    </td>
+                </tr>
+            </table>
+            
+           
+        </section>
+        
+        
+    </div>
+    
+    <div class="container">
+
+        <section class="overview">
+            <h2>PART B: Feature-Based Automatic Image Stitching Project Overview</h2>
+            <p>This part of project implements a complete automatic image stitching pipeline based on the paper "Multi-Image Matching using Multi-Scale Oriented Patches". 
+                The pipeline first detects Harris corners, extracts feature descriptors, matches features between images, then uses RANSAC to compute homographies.</p>
+        </section>
+        
+        <section class="part1">
+            <h2>B.1: Harris Corner Detection</h2>
+            
+            <h3>Harris Corner Detector</h3>
+            <p>Used the the given <code>get_harris_corners</code> function in the <code>harris.py</code> file to
+                identify interest points in images. 
+                The algorithm computes corner response using the matrix and eigenvalues.</p>
+            
+            <h4>Algorithm Logic</h4>
+            <div class="problems-list">
+                <ol>
+                    <li>Apply Gaussian Smoothing: for noise reduction and more consistent result</li> 
+                    <li>Compute image gradients: Calculate Ix and Iy using Sobel filters</li>
+                    <li>Compute products of gradients: Ix², Iy², IxIy</li>
+                    <li>Apply Gaussian smoothing: Compute weighted sums over a window</li>
+                    <li>Compute corner response: R = det(M)/trace(M) with M being the matix:</li>
+                    <div > M = <math xmlns="http://www.w3.org/1998/Math/MathML"> <mrow> <mo>[</mo> <mtable> <mtr> <mtd> <munder> <mo>∑</mo> <mi>window</mi> </munder> <msubsup> <mi>I</mi> <mi>x</mi> <mn>2</mn> </msubsup> </mtd> <mtd> <munder> <mo>∑</mo> <mi>window</mi> </munder> <msub> <mi>I</mi> <mi>x</mi> </msub> <msub> <mi>I</mi> <mi>y</mi> </msub> </mtd> </mtr> <mtr> <mtd> <munder> <mo>∑</mo> <mi>window</mi> </munder> <msub> <mi>I</mi> <mi>x</mi> </msub> <msub> <mi>I</mi> <mi>y</mi> </msub> </mtd> <mtd> <munder> <mo>∑</mo> <mi>window</mi> </munder> <msubsup> <mi>I</mi> <mi>y</mi> <mn>2</mn> </msubsup> </mtd> </mtr> </mtable> <mo>]</mo> </mrow> </math> </div>
+                    <li>Threshold response: Select points with R > threshold</li>
+                </ol>
+            </div>
+            
+            <h4>Harris Corners Visualization</h4>
+            <div class="image-grid">
+                <div>
+                    <img src="./10.12.2.png" alt="Harris corners example 1">
+                    <div class="caption">Image 1 with Harris corners</div>
+                </div>
+                <div>
+                    <img src="./10.12.3.png" alt="Harris corners example 2">
+                    <div class="caption">Image 2 with Harris corners</div>
+                </div>
+            </div>
+            
+            <h3>Adaptive Non-Maximal Suppression (ANMS)</h3>
+            <p>Implemented ANMS to select spatially well-distributed corners by suppressing 
+                weaker corners near stronger ones, ensuring better feature distribution across the image 
+                while preserving the most prominent corners.</p>
+            <h4>ANMS Algorithm</h4>
+            <p>The <code>anms(h_value, coord, num_points, c_robust=0.4)</code> gets the h_value, and detected points from the harris corner function. 
+            It return the best <code>num_points</code> points and their corresponding radius (the radius where they are the local best point). </p>
+            <div class="problems-list">
+                <ol>
+                    <li>For each corner, find all other corners that have a Harris response value strong enough to suppress it. </li>
+                            <div class="code-block">
+                            for i in range(n): <br>
+                                 &nbsp;&nbsp; # Find corners that are significantly stronger <br>
+                                 &nbsp;&nbsp; stronger_pts = h_value > (h_value[i] / c_robust)</div>
+                    <li> Calculate Suppression Radius: find the minimum distance from the current point to any significantly stronger corner</li>
+                        <ul class = "inner-list">
+                            <li>If stronger corners exist → find the closest distance to them</li>
+                            <li>If no stronger corners exist → this corner is a local maximum (radius = ∞)</li>
+                        </ul>
+        
+                    <li>Sort corners by suppression radius in descending order</li>
+                    <li>Select the top N corners with largest suppression radii</li>
+                </ol>
+            </div>
+            
+            <h4>ANMS Results</h4>
+            <div class="image-grid">
+                <div>
+                    <img src="./r0.4ucb.png" alt="ANMS corners example 1">
+                    <div class="caption">Image 1 with ANMS corners, robust = 0.4</div>
+                </div>
+                <div>
+                    <img src="./r0.4card.png" alt="ANMS corners example 2">
+                    <div class="caption">Image 2 with ANMS corners, robust = 0.4</div>
+                </div>
+            </div>
+            
+            <h4>ANMS Result with Fewer Points</h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="./10.12.5.robust0.4.png" alt="Harris corners">
+                        <div class="caption">ANMS with robust = 0.4, num_points = 90</div>
+                    </td>
+                    <td>
+                        <img src="./robust0.4.card.png" alt="ANMS corners">
+                        <div class="caption">ANMS with robust = 0.4, num_points = 90</div>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        
+        <section class="part2">
+            <h2>B.2: Feature Descriptor Extraction</h2>
+            
+            <h3>Feature Descriptor Implementation</h3>
+            <p>Extracted 8×8 feature descriptors from 40×40 patches around each interest point, with the pixel value normalized.</p>
+            
+            <h4>Descriptor Extraction Steps</h4>
+            <div class="problems-list">
+                <ol>
+                    <li>Extract 40×40 patch centered at each interest point</li>
+                    <li>Downsample the patch to 8×8 by skipping pixels at regular intervals.</li>
+                    <li>Apply bias/gain normalization:
+                        <div class="code-block">
+                        # normalized = (patch - mean) / std <br>
+                                patch = (patch - np.mean(patch)) / (np.std(patch) + 1e-8)
+
+                        </div>
+                    </li>
+                    <li>Flatten to 64-dimensional feature vector</li>
+                </ol>
+            </div>
+            
+            <h4>Extracted Feature Descriptors</h4>
+            <div class="image-grid">
+                <div>
+                    <img src="10.13.10.png" alt="Feature descriptors example 1">
+                    <div class="caption">Sample feature descriptors from image pair 1</div>
+                </div>
+                <div>
+                    <img src="10.13.13.png" alt="Feature descriptors example 2">
+                    <div class="caption">Sample feature descriptors from image pair 1</div>
+                </div>
+                
+            </div>
+            <div class="image-grid">
+                <div>
+                    <img src="10.13.20.png" alt="Feature descriptors example 2">
+                    <div class="caption">Sample feature descriptors from image pair 2</div>
+                </div>
+                <div>
+                    <img src="10.13.21.png" alt="Feature descriptors example 2">
+                    <div class="caption">Sample feature descriptors from image pair 2</div>
+                </div>
+             </div>
+             <div class="image-grid">
+                <div>
+                    <img src="10.13.24.png" alt="Feature descriptors example 2">
+                    <div class="caption">Sample feature descriptors from image pair 3</div>
+                </div>
+                <div>
+                    <img src="10.13.25.png" alt="Feature descriptors example 2">
+                    <div class="caption">Sample feature descriptors from image pair 3</div>
+                </div>
+             </div>
+        </section>
+        
+        <section class="part3">
+            <h2>B.3: Feature Matching</h2>
+            
+            <h3>Feature Matching Implementation</h3>
+            <p>Implemented feature matching using Lowe's ratio test to
+                 find reliable correspondences between images.</p>
+            
+            <h4>Matching Algorithm</h4>
+            <div class="problems-list">
+                <p>The <code>feature_matching(descriptors_1, valid_coords_1, descriptors_2, valid_coords_2, threshold=0.8)</code> 
+                returns the matched descriptors and coordinates in paired order. </p>
+                <ol>
+                    <li>For each descriptor in image 1, find two nearest neighbors in image 2: 
+                        <div class = "code-block">nbrs = NearestNeighbors(n_neighbors=2).fit(descriptors_2) <br>
+                                distances, indices = nbrs.kneighbors(descriptors_1)</div>
+                    </li>
+                    <li>Compute distance ratio: d₁/d₂</li>
+                    <li>Apply threshold (default 0.8) to accept matches</li>
+                    <li>Keep matches where ratio < threshold</li>
+                </ol>
+            </div>
+            
+            <h4>Feature Matching Results</h4>
+            <div class="image-grid">
+                <div>
+                    <img src="ucb500p10.16.png" alt="Feature matches example 1">
+                    <div class="caption">Feature matches between image pair 1</div>
+                </div>
+            </div>
+             <div class="image-grid">
+                <div>
+                    <img src="p100card.png" alt="Feature matches example 1">
+                    <div class="caption">Feature matches between image pair 2 (num_point=100)</div>
+                </div>
+            </div>
+             <div class="image-grid">
+                <div>
+                    <img src="10.13.46.png" alt="Feature matches example 1">
+                    <div class="caption">Feature matches between image pair 3  (num_point=500)</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="part4">
+            <h2>B.4: RANSAC for Robust Homography</h2>
+            
+            <h3>RANSAC Implementation</h3>
+            <p>Implemented 4-point RANSAC to compute robust homography 
+                estimates from potentially noisy feature matches and handle outliers.</p>
+            
+            <h4>RANSAC Algorithm</h4>
+            <div class="problems-list">
+                <p>The <code> ransac_corrected(src_pts, dst_pts, num_iter=1000, inlier_threshold=10)</code>
+                function returns the best_H (best homography matrix), best_inlier (maximum number of inliers found), 
+                best_error (minimum average reprojection error), best_inlier_mask ( boolean mask of inlier point)</p>
+                <ol>
+                    <li>Randomly select 4 feature correspondences: select minimal sample set for homography estimation to avoid outlier</li>
+                    <div class = "code-block">
+                        if src_pts_xy.shape[0] >= 4: <br>
+                        &nbsp; &nbsp;idx = np.random.choice(src_pts_xy.shape[0], 4, replace=False)<br>
+                        else: <br>
+                        &nbsp; &nbsp;idx = np.arange(src_pts_xy.shape[0])<br>
+                    </div>
+                    <li>Compute homography H using the 4 points by calling the <code>computeH</code> function</li>
+                    <li>Project all points from image 1 to image 2 using <code> src_transformed = apply_homography(src_pts_xy, H)</code></li>
+                    <li>Count inliers: count points with error (Euclidean distance between projected and actual points) within distance threshold</li>
+                    <li>Update model: <code>if (num_inliers > best_inlier) or (num_inliers == best_inlier and avg_error < best_error) </code> we update the best inlier and error to the current correspondence's data</li>
+                    <li>Repeat for N iterations, keep homography with most inliers</li>
+                    <li>Recompute homography using all inliers</li>
+                </ol>
+            </div>
+            
+        
+            <h3>Automatic vs Manual Stitching Comparison</h3>
+            
+            <!-- <h4>Mosaic 1: Indoor Scene</h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="10.14.1manual.png" alt="Manual mosaic">
+                        <div class="caption">Manual stitching</div>
+                    </td>
+                    <td>
+                        <img src="10.13.41.png" alt="Automatic mosaic">
+                        <div class="caption">Automatic stitching</div>
+                    </td>
+                </tr>
+            </table> -->
+            
+            <h4>Mosaic 1: </h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="10.7.bilinear.png" alt="Manual mosaic">
+                        <div class="caption">Manual stitching</div>
+                    </td>
+                    <td>
+                        <img src="10.13.19bilinear.png" alt="Automatic mosaic">
+                        <div class="caption">Automatic stitching</div>
+                    </td>
+                </tr>
+            </table>
+            <h4>Mosaic 2: </h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="10.16.3.png" alt="Manual mosaic">
+                        <div class="caption">Manual stitching</div>
+                    </td>
+                    <td>
+                        <img src="10.13.32.png" alt="Automatic mosaic">
+                        <div class="caption">Automatic stitching</div>
+                    </td>
+                </tr>
+            </table>
+            <h4>Mosaic 3: </h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="10.7.6bilinear.png" alt="Manual mosaic">
+                        <div class="caption">Manual stitching</div>
+                    </td>
+                    <td>
+                        <img src="10.13.31.png" alt="Automatic mosaic">
+                        <div class="caption">Automatic stitching</div>
+                    </td>
+                </tr>
+            </table>
+            <h4>Mosaic 4: </h4>
+            <table class="image-table">
+                <tr>
+                    <td>
+                        <img src="10.7.25.png" alt="Manual mosaic">
+                        <div class="caption">Manual stitching</div>
+                    </td>
+                    <td>
+                        <img src="10.16.2.png" alt="Automatic mosaic">
+                        <div class="caption">Automatic stitching</div>
+                    </td>
+                </tr>
+            </table>
+            <p>This comparison is interesting since for the manual one, I set the ground as the correspondence points, resulting 
+                trees to be not perfectly aligned due to wind. However for the automatic one, most of the correspondence
+                the algorithm found is on the tree branches, so the branches were perfectly algined in the result but the ground was not. 
+            </p>
+             <div class="image-grid">
+                <div>
+                    <img src="10.13.28.png" alt="Feature matches example 1">
+                    <div class="caption">Feature matches for image pair 4 </div>
+                </div>
+            </div>
+<p>To reduce computational load, I resized the image before running the auto-mosaic algorithm.</p>            
+            
+            
+        </section>
+        
+       
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Feature-Based Automatic Image Stitching Project</p>
+            <p>Computational Photography - 2025</p>
+        </div>
+    </footer>
+</body>
+</html>
