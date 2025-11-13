@@ -31,4 +31,4 @@ def convert_to_JPG(folder_path):
         print(f"Finished converting {converted_count} file(s).")
 
 # Run the conversion
-convert_to_JPG("./0.1")
+convert_to_JPG("./0.2")
