@@ -1,0 +1,801 @@
+
+Lego with correct PNSR ::::: 
+
+
+ Using device: cuda
+Iter 0000 | train loss 0.083315 | train PSNR 10.79 dB
+Rendered range: 0.05274037 to 0.08666351
+GT range: 0.0 to 1.0
+Rendered range: 0.055252448 to 0.08301252
+GT range: 0.0 to 1.0
+Rendered range: 0.056635268 to 0.08698352
+GT range: 0.0 to 1.0
+Rendered range: 0.05599689 to 0.07793549
+GT range: 0.0 to 1.0
+Rendered range: 0.055370435 to 0.07766406
+GT range: 0.0 to 1.0
+Rendered range: 0.052232534 to 0.08280386
+GT range: 0.0 to 1.0
+Rendered range: 0.058905274 to 0.08534905
+GT range: 0.0 to 1.0
+Rendered range: 0.05619023 to 0.08939615
+GT range: 0.0 to 1.0
+Rendered range: 0.057427593 to 0.08715169
+GT range: 0.0 to 1.0
+Rendered range: 0.05704387 to 0.083617285
+GT range: 0.0 to 1.0
+[VAL] Iter 0000 | per-image PSNRs: [11.1850004196167, 9.008999824523926, 11.185999870300293, 11.855999946594238, 14.897000312805176, 16.093000411987305, 16.98699951171875, 10.79699993133545, 11.687999725341797, 11.239999771118164] | mean PSNR: 12.494 dB
+Iter 0010 | train loss 0.054786 | train PSNR 12.61 dB
+Iter 0020 | train loss 0.078596 | train PSNR 11.05 dB
+Iter 0030 | train loss 0.075501 | train PSNR 11.22 dB
+Iter 0040 | train loss 0.059845 | train PSNR 12.23 dB
+Iter 0050 | train loss 0.054814 | train PSNR 12.61 dB
+Iter 0060 | train loss 0.047979 | train PSNR 13.19 dB
+Iter 0070 | train loss 0.041040 | train PSNR 13.87 dB
+Iter 0080 | train loss 0.028901 | train PSNR 15.39 dB
+Iter 0090 | train loss 0.031844 | train PSNR 14.97 dB
+Iter 0100 | train loss 0.028078 | train PSNR 15.52 dB
+Rendered range: 0.0 to 0.85586315
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8359185
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8160858
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8212392
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.82247835
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.81938136
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.74333024
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.85692436
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.7923545
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.83429897
+GT range: 0.0 to 1.0
+[VAL] Iter 0100 | per-image PSNRs: [16.174999237060547, 14.564000129699707, 15.354000091552734, 14.968999862670898, 14.803999900817871, 15.484000205993652, 16.60300064086914, 15.57699966430664, 15.644000053405762, 15.46500015258789] | mean PSNR: 15.464 dB
+Iter 0110 | train loss 0.025143 | train PSNR 16.00 dB
+Iter 0120 | train loss 0.027798 | train PSNR 15.56 dB
+Iter 0130 | train loss 0.021553 | train PSNR 16.66 dB
+Iter 0140 | train loss 0.019354 | train PSNR 17.13 dB
+Iter 0150 | train loss 0.020067 | train PSNR 16.98 dB
+Iter 0160 | train loss 0.016800 | train PSNR 17.75 dB
+Iter 0170 | train loss 0.016322 | train PSNR 17.87 dB
+Iter 0180 | train loss 0.014590 | train PSNR 18.36 dB
+Iter 0190 | train loss 0.013392 | train PSNR 18.73 dB
+Iter 0200 | train loss 0.012908 | train PSNR 18.89 dB
+Rendered range: 0.0 to 0.91593426
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.93314856
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8872656
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9301418
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8324728
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.7476887
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.6529953
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9360635
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8804667
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8874301
+GT range: 0.0 to 1.0
+[VAL] Iter 0200 | per-image PSNRs: [18.059999465942383, 18.44700050354004, 17.863000869750977, 19.08300018310547, 19.37700080871582, 20.520000457763672, 21.398000717163086, 17.940000534057617, 18.50200080871582, 17.937999725341797] | mean PSNR: 18.913 dB
+Iter 0210 | train loss 0.012767 | train PSNR 18.94 dB
+Iter 0220 | train loss 0.013922 | train PSNR 18.56 dB
+Iter 0230 | train loss 0.012518 | train PSNR 19.02 dB
+Iter 0240 | train loss 0.014621 | train PSNR 18.35 dB
+Iter 0250 | train loss 0.012603 | train PSNR 19.00 dB
+Iter 0260 | train loss 0.012035 | train PSNR 19.20 dB
+Iter 0270 | train loss 0.010177 | train PSNR 19.92 dB
+Iter 0280 | train loss 0.012096 | train PSNR 19.17 dB
+Iter 0290 | train loss 0.011468 | train PSNR 19.40 dB
+Iter 0300 | train loss 0.010853 | train PSNR 19.64 dB
+Rendered range: 0.0 to 0.96572757
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98257625
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9568472
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9802966
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.90996367
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.91660166
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8347969
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9777073
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9673302
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9489884
+GT range: 0.0 to 1.0
+[VAL] Iter 0300 | per-image PSNRs: [19.31399917602539, 20.222000122070312, 19.426000595092773, 20.388999938964844, 20.55699920654297, 21.54400062561035, 22.19499969482422, 19.113000869750977, 19.472000122070312, 19.461000442504883] | mean PSNR: 20.169 dB
+Iter 0310 | train loss 0.010950 | train PSNR 19.61 dB
+Iter 0320 | train loss 0.010905 | train PSNR 19.62 dB
+Iter 0330 | train loss 0.009933 | train PSNR 20.03 dB
+Iter 0340 | train loss 0.009292 | train PSNR 20.32 dB
+Iter 0350 | train loss 0.010444 | train PSNR 19.81 dB
+Iter 0360 | train loss 0.010105 | train PSNR 19.95 dB
+Iter 0370 | train loss 0.011861 | train PSNR 19.26 dB
+Iter 0380 | train loss 0.010894 | train PSNR 19.63 dB
+Iter 0390 | train loss 0.009173 | train PSNR 20.37 dB
+Iter 0400 | train loss 0.009328 | train PSNR 20.30 dB
+Rendered range: 0.0 to 0.98613167
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9919348
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9745096
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98766434
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9630219
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.91110015
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.87451965
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98904824
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9844165
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98093086
+GT range: 0.0 to 1.0
+[VAL] Iter 0400 | per-image PSNRs: [19.888999938964844, 20.999000549316406, 20.04199981689453, 21.069000244140625, 21.197999954223633, 22.179000854492188, 23.041000366210938, 19.809999465942383, 19.979999542236328, 20.141000747680664] | mean PSNR: 20.835 dB
+Iter 0410 | train loss 0.008933 | train PSNR 20.49 dB
+Iter 0420 | train loss 0.009386 | train PSNR 20.28 dB
+Iter 0430 | train loss 0.008378 | train PSNR 20.77 dB
+Iter 0440 | train loss 0.008202 | train PSNR 20.86 dB
+Iter 0450 | train loss 0.006980 | train PSNR 21.56 dB
+Iter 0460 | train loss 0.008603 | train PSNR 20.65 dB
+Iter 0470 | train loss 0.008772 | train PSNR 20.57 dB
+Iter 0480 | train loss 0.008777 | train PSNR 20.57 dB
+Iter 0490 | train loss 0.010388 | train PSNR 19.83 dB
+Iter 0500 | train loss 0.006804 | train PSNR 21.67 dB
+Rendered range: 0.0 to 0.98414105
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9926429
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9847945
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9855634
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9588948
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9412255
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.86662674
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99007684
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.990017
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9842891
+GT range: 0.0 to 1.0
+[VAL] Iter 0500 | per-image PSNRs: [20.69300079345703, 21.902999877929688, 20.56100082397461, 21.558000564575195, 21.788000106811523, 22.576000213623047, 23.55299949645996, 20.58799934387207, 20.756999969482422, 20.711999893188477] | mean PSNR: 21.469 dB
+Iter 0510 | train loss 0.008845 | train PSNR 20.53 dB
+Iter 0520 | train loss 0.008018 | train PSNR 20.96 dB
+Iter 0530 | train loss 0.007673 | train PSNR 21.15 dB
+Iter 0540 | train loss 0.006609 | train PSNR 21.80 dB
+Iter 0550 | train loss 0.007335 | train PSNR 21.35 dB
+Iter 0560 | train loss 0.008375 | train PSNR 20.77 dB
+Iter 0570 | train loss 0.006025 | train PSNR 22.20 dB
+Iter 0580 | train loss 0.008535 | train PSNR 20.69 dB
+Iter 0590 | train loss 0.007445 | train PSNR 21.28 dB
+Iter 0600 | train loss 0.006489 | train PSNR 21.88 dB
+Rendered range: 0.0 to 0.9862413
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9919343
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98645836
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9814779
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9548517
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.92639625
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.83669186
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9910079
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9923003
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9866695
+GT range: 0.0 to 1.0
+[VAL] Iter 0600 | per-image PSNRs: [21.309999465942383, 22.511999130249023, 21.101999282836914, 21.89900016784668, 22.17300033569336, 23.01799964904785, 24.01099967956543, 21.26799964904785, 21.40399932861328, 21.325000762939453] | mean PSNR: 22.002 dB
+Iter 0610 | train loss 0.007042 | train PSNR 21.52 dB
+Iter 0620 | train loss 0.006268 | train PSNR 22.03 dB
+Iter 0630 | train loss 0.006598 | train PSNR 21.81 dB
+Iter 0640 | train loss 0.007991 | train PSNR 20.97 dB
+Iter 0650 | train loss 0.006683 | train PSNR 21.75 dB
+Iter 0660 | train loss 0.006976 | train PSNR 21.56 dB
+Iter 0670 | train loss 0.006654 | train PSNR 21.77 dB
+Iter 0680 | train loss 0.006323 | train PSNR 21.99 dB
+Iter 0690 | train loss 0.006369 | train PSNR 21.96 dB
+Iter 0700 | train loss 0.006505 | train PSNR 21.87 dB
+Rendered range: 0.0 to 0.98324645
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98843896
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9775663
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.96979463
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9155916
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.86765355
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.799629
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.988285
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98392826
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97664046
+GT range: 0.0 to 1.0
+[VAL] Iter 0700 | per-image PSNRs: [21.743000030517578, 23.04199981689453, 21.68899917602539, 22.356000900268555, 22.865999221801758, 23.76300048828125, 24.336000442504883, 21.812000274658203, 21.920000076293945, 21.948999404907227] | mean PSNR: 22.547 dB
+Iter 0710 | train loss 0.006033 | train PSNR 22.19 dB
+Iter 0720 | train loss 0.006048 | train PSNR 22.18 dB
+Iter 0730 | train loss 0.006530 | train PSNR 21.85 dB
+Iter 0740 | train loss 0.006339 | train PSNR 21.98 dB
+Iter 0750 | train loss 0.006468 | train PSNR 21.89 dB
+Iter 0760 | train loss 0.006552 | train PSNR 21.84 dB
+Iter 0770 | train loss 0.008021 | train PSNR 20.96 dB
+Iter 0780 | train loss 0.007100 | train PSNR 21.49 dB
+Iter 0790 | train loss 0.006790 | train PSNR 21.68 dB
+Iter 0800 | train loss 0.006107 | train PSNR 22.14 dB
+Rendered range: 0.0 to 0.98355913
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98836994
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9761022
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.95606226
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.93351316
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.87228006
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.74700606
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98720145
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9822547
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97684646
+GT range: 0.0 to 1.0
+[VAL] Iter 0800 | per-image PSNRs: [22.18000030517578, 23.18899917602539, 22.02899932861328, 22.71299934387207, 23.400999069213867, 24.222999572753906, 24.687000274658203, 22.334999084472656, 22.347999572753906, 22.31399917602539] | mean PSNR: 22.942 dB
+Iter 0810 | train loss 0.006316 | train PSNR 22.00 dB
+Iter 0820 | train loss 0.006235 | train PSNR 22.05 dB
+Iter 0830 | train loss 0.006186 | train PSNR 22.09 dB
+Iter 0840 | train loss 0.005306 | train PSNR 22.75 dB
+Iter 0850 | train loss 0.005826 | train PSNR 22.35 dB
+Iter 0860 | train loss 0.005799 | train PSNR 22.37 dB
+Iter 0870 | train loss 0.005336 | train PSNR 22.73 dB
+Iter 0880 | train loss 0.005840 | train PSNR 22.34 dB
+Iter 0890 | train loss 0.005268 | train PSNR 22.78 dB
+Iter 0900 | train loss 0.005209 | train PSNR 22.83 dB
+Rendered range: 0.0 to 0.9870886
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9918788
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9808345
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.96055835
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9419699
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.90770775
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8511221
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.988371
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9850798
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.976865
+GT range: 0.0 to 1.0
+[VAL] Iter 0900 | per-image PSNRs: [22.53499984741211, 23.625999450683594, 22.409000396728516, 22.937999725341797, 23.35300064086914, 24.125, 24.860000610351562, 22.520999908447266, 22.382999420166016, 22.663000106811523] | mean PSNR: 23.141 dB
+Iter 0910 | train loss 0.005333 | train PSNR 22.73 dB
+Iter 0920 | train loss 0.005677 | train PSNR 22.46 dB
+Iter 0930 | train loss 0.005449 | train PSNR 22.64 dB
+Iter 0940 | train loss 0.005849 | train PSNR 22.33 dB
+Iter 0950 | train loss 0.005612 | train PSNR 22.51 dB
+Iter 0960 | train loss 0.005157 | train PSNR 22.88 dB
+Iter 0970 | train loss 0.004980 | train PSNR 23.03 dB
+Iter 0980 | train loss 0.004887 | train PSNR 23.11 dB
+Iter 0990 | train loss 0.005233 | train PSNR 22.81 dB
+Iter 1000 | train loss 0.005281 | train PSNR 22.77 dB
+Rendered range: 0.0 to 0.9894901
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9930412
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9852632
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97162384
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.94949
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.92471105
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.86542916
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9910063
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9876115
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9846807
+GT range: 0.0 to 1.0
+[VAL] Iter 1000 | per-image PSNRs: [23.156999588012695, 23.95400047302246, 22.64699935913086, 22.91900062561035, 23.694000244140625, 24.34000015258789, 24.892000198364258, 23.076000213623047, 22.905000686645508, 23.05900001525879] | mean PSNR: 23.464 dB
+Iter 1010 | train loss 0.004700 | train PSNR 23.28 dB
+Iter 1020 | train loss 0.005407 | train PSNR 22.67 dB
+Iter 1030 | train loss 0.004728 | train PSNR 23.25 dB
+Iter 1040 | train loss 0.005389 | train PSNR 22.68 dB
+Iter 1050 | train loss 0.004857 | train PSNR 23.14 dB
+Iter 1060 | train loss 0.005577 | train PSNR 22.54 dB
+Iter 1070 | train loss 0.004348 | train PSNR 23.62 dB
+Iter 1080 | train loss 0.005093 | train PSNR 22.93 dB
+Iter 1090 | train loss 0.004792 | train PSNR 23.19 dB
+Iter 1100 | train loss 0.004508 | train PSNR 23.46 dB
+Rendered range: 0.0 to 0.98303026
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99056655
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9764689
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9618673
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.93750197
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.91662824
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8369676
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9860719
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98169756
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97293824
+GT range: 0.0 to 1.0
+[VAL] Iter 1100 | per-image PSNRs: [23.52199935913086, 24.173999786376953, 22.961000442504883, 23.174999237060547, 23.999000549316406, 24.735000610351562, 25.334999084472656, 23.53700065612793, 23.297000885009766, 23.46500015258789] | mean PSNR: 23.820 dB
+Iter 1110 | train loss 0.004277 | train PSNR 23.69 dB
+Iter 1120 | train loss 0.004770 | train PSNR 23.21 dB
+Iter 1130 | train loss 0.004850 | train PSNR 23.14 dB
+Iter 1140 | train loss 0.004157 | train PSNR 23.81 dB
+Iter 1150 | train loss 0.004946 | train PSNR 23.06 dB
+Iter 1160 | train loss 0.005202 | train PSNR 22.84 dB
+Iter 1170 | train loss 0.004688 | train PSNR 23.29 dB
+Iter 1180 | train loss 0.004960 | train PSNR 23.05 dB
+Iter 1190 | train loss 0.004759 | train PSNR 23.22 dB
+Iter 1200 | train loss 0.005014 | train PSNR 23.00 dB
+Rendered range: 0.0 to 0.9851152
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9934515
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98307157
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9664803
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9397126
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.921699
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8350838
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.985944
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9842946
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97529507
+GT range: 0.0 to 1.0
+[VAL] Iter 1200 | per-image PSNRs: [23.63800048828125, 24.36199951171875, 23.274999618530273, 23.628000259399414, 24.295000076293945, 24.965999603271484, 25.540000915527344, 23.549999237060547, 23.13599967956543, 23.719999313354492] | mean PSNR: 24.011 dB
+Iter 1210 | train loss 0.004232 | train PSNR 23.73 dB
+Iter 1220 | train loss 0.004883 | train PSNR 23.11 dB
+Iter 1230 | train loss 0.004582 | train PSNR 23.39 dB
+Iter 1240 | train loss 0.004385 | train PSNR 23.58 dB
+Iter 1250 | train loss 0.004653 | train PSNR 23.32 dB
+Iter 1260 | train loss 0.004315 | train PSNR 23.65 dB
+Iter 1270 | train loss 0.004503 | train PSNR 23.46 dB
+Iter 1280 | train loss 0.004975 | train PSNR 23.03 dB
+Iter 1290 | train loss 0.004924 | train PSNR 23.08 dB
+Iter 1300 | train loss 0.004287 | train PSNR 23.68 dB
+Rendered range: 0.0 to 0.98257506
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98971003
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9782449
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.95978457
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.93120295
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.90372837
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8306447
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.984953
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9802252
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9724846
+GT range: 0.0 to 1.0
+[VAL] Iter 1300 | per-image PSNRs: [24.051000595092773, 24.650999069213867, 23.319000244140625, 23.76300048828125, 24.554000854492188, 25.452999114990234, 25.724000930786133, 24.0, 23.74799919128418, 23.958999633789062] | mean PSNR: 24.322 dB
+Iter 1310 | train loss 0.004492 | train PSNR 23.48 dB
+Iter 1320 | train loss 0.004234 | train PSNR 23.73 dB
+Iter 1330 | train loss 0.004557 | train PSNR 23.41 dB
+Iter 1340 | train loss 0.005283 | train PSNR 22.77 dB
+Iter 1350 | train loss 0.003867 | train PSNR 24.13 dB
+Iter 1360 | train loss 0.004022 | train PSNR 23.96 dB
+Iter 1370 | train loss 0.004567 | train PSNR 23.40 dB
+Iter 1380 | train loss 0.004729 | train PSNR 23.25 dB
+Iter 1390 | train loss 0.004316 | train PSNR 23.65 dB
+Iter 1400 | train loss 0.004160 | train PSNR 23.81 dB
+Rendered range: 0.0 to 0.9853072
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9928932
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98333496
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.96990293
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.94539756
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9143477
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.84729886
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98820096
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9830412
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9777262
+GT range: 0.0 to 1.0
+[VAL] Iter 1400 | per-image PSNRs: [24.413999557495117, 25.08300018310547, 23.81800079345703, 23.804000854492188, 24.624000549316406, 25.343000411987305, 25.777000427246094, 24.503000259399414, 24.128000259399414, 24.329999923706055] | mean PSNR: 24.583 dB
+Iter 1410 | train loss 0.004992 | train PSNR 23.02 dB
+Iter 1420 | train loss 0.004042 | train PSNR 23.93 dB
+Iter 1430 | train loss 0.004014 | train PSNR 23.96 dB
+Iter 1440 | train loss 0.003913 | train PSNR 24.07 dB
+Iter 1450 | train loss 0.004003 | train PSNR 23.98 dB
+Iter 1460 | train loss 0.003877 | train PSNR 24.12 dB
+Iter 1470 | train loss 0.004339 | train PSNR 23.63 dB
+Iter 1480 | train loss 0.004231 | train PSNR 23.74 dB
+Iter 1490 | train loss 0.003963 | train PSNR 24.02 dB
+Iter 1500 | train loss 0.004389 | train PSNR 23.58 dB
+Rendered range: 0.0 to 0.98628616
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99314076
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98404884
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.96998876
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.947281
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.92026
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8486476
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98793525
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98468155
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9796851
+GT range: 0.0 to 1.0
+[VAL] Iter 1500 | per-image PSNRs: [24.290000915527344, 24.979000091552734, 23.683000564575195, 23.965999603271484, 24.856000900268555, 25.52400016784668, 26.166000366210938, 24.333999633789062, 24.198999404907227, 24.288000106811523] | mean PSNR: 24.628 dB
+Iter 1510 | train loss 0.004105 | train PSNR 23.87 dB
+Iter 1520 | train loss 0.004085 | train PSNR 23.89 dB
+Iter 1530 | train loss 0.004126 | train PSNR 23.84 dB
+Iter 1540 | train loss 0.003511 | train PSNR 24.55 dB
+Iter 1550 | train loss 0.003808 | train PSNR 24.19 dB
+Iter 1560 | train loss 0.004142 | train PSNR 23.83 dB
+Iter 1570 | train loss 0.003771 | train PSNR 24.24 dB
+Iter 1580 | train loss 0.003953 | train PSNR 24.03 dB
+Iter 1590 | train loss 0.004706 | train PSNR 23.27 dB
+Iter 1600 | train loss 0.003832 | train PSNR 24.17 dB
+Rendered range: 0.0 to 0.98861235
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99515283
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9872269
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97814184
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9445014
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9048369
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8603841
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9896301
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98730373
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98368895
+GT range: 0.0 to 1.0
+[VAL] Iter 1600 | per-image PSNRs: [24.316999435424805, 25.14699935913086, 23.930999755859375, 24.110000610351562, 24.902999877929688, 25.562999725341797, 26.165000915527344, 24.433000564575195, 24.176000595092773, 24.549999237060547] | mean PSNR: 24.730 dB
+Iter 1610 | train loss 0.004004 | train PSNR 23.98 dB
+Iter 1620 | train loss 0.003913 | train PSNR 24.08 dB
+Iter 1630 | train loss 0.003991 | train PSNR 23.99 dB
+Iter 1640 | train loss 0.004559 | train PSNR 23.41 dB
+Iter 1650 | train loss 0.004411 | train PSNR 23.55 dB
+Iter 1660 | train loss 0.004236 | train PSNR 23.73 dB
+Iter 1670 | train loss 0.003948 | train PSNR 24.04 dB
+Iter 1680 | train loss 0.004386 | train PSNR 23.58 dB
+Iter 1690 | train loss 0.004119 | train PSNR 23.85 dB
+Iter 1700 | train loss 0.003758 | train PSNR 24.25 dB
+Rendered range: 0.0 to 0.98403645
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99269885
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9798999
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.96454865
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9331099
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8884029
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8306501
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9861222
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97987276
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9766878
+GT range: 0.0 to 1.0
+[VAL] Iter 1700 | per-image PSNRs: [24.72800064086914, 25.398000717163086, 24.138999938964844, 24.195999145507812, 25.187999725341797, 25.937000274658203, 26.320999145507812, 24.7189998626709, 24.405000686645508, 24.643999099731445] | mean PSNR: 24.967 dB
+Iter 1710 | train loss 0.004120 | train PSNR 23.85 dB
+Iter 1720 | train loss 0.003810 | train PSNR 24.19 dB
+Iter 1730 | train loss 0.004145 | train PSNR 23.82 dB
+Iter 1740 | train loss 0.003945 | train PSNR 24.04 dB
+Iter 1750 | train loss 0.003864 | train PSNR 24.13 dB
+Iter 1760 | train loss 0.003871 | train PSNR 24.12 dB
+Iter 1770 | train loss 0.004375 | train PSNR 23.59 dB
+Iter 1780 | train loss 0.004188 | train PSNR 23.78 dB
+Iter 1790 | train loss 0.003937 | train PSNR 24.05 dB
+Iter 1800 | train loss 0.004394 | train PSNR 23.57 dB
+Rendered range: 0.0 to 0.9894611
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9951855
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9837742
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.971448
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9418481
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9083155
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8631519
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9909567
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98522
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98362607
+GT range: 0.0 to 1.0
+[VAL] Iter 1800 | per-image PSNRs: [24.628000259399414, 25.469999313354492, 24.138999938964844, 24.424999237060547, 25.268999099731445, 25.992000579833984, 26.422000885009766, 24.81800079345703, 24.575000762939453, 24.81399917602539] | mean PSNR: 25.055 dB
+Iter 1810 | train loss 0.003871 | train PSNR 24.12 dB
+Iter 1820 | train loss 0.004113 | train PSNR 23.86 dB
+Iter 1830 | train loss 0.003872 | train PSNR 24.12 dB
+Iter 1840 | train loss 0.004074 | train PSNR 23.90 dB
+Iter 1850 | train loss 0.004986 | train PSNR 23.02 dB
+Iter 1860 | train loss 0.004786 | train PSNR 23.20 dB
+Iter 1870 | train loss 0.004295 | train PSNR 23.67 dB
+Iter 1880 | train loss 0.004597 | train PSNR 23.38 dB
+Iter 1890 | train loss 0.004323 | train PSNR 23.64 dB
+Iter 1900 | train loss 0.003762 | train PSNR 24.25 dB
+Rendered range: 0.0 to 0.9930887
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99634916
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9902943
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9850911
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9610124
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.918975
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.899848
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.992754
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9911508
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9884202
+GT range: 0.0 to 1.0
+[VAL] Iter 1900 | per-image PSNRs: [24.992000579833984, 25.638999938964844, 24.391000747680664, 24.400999069213867, 25.299999237060547, 26.097999572753906, 26.54400062561035, 25.075000762939453, 24.621000289916992, 24.983999252319336] | mean PSNR: 25.205 dB
+Iter 1910 | train loss 0.004442 | train PSNR 23.52 dB
+Iter 1920 | train loss 0.003330 | train PSNR 24.78 dB
+Iter 1930 | train loss 0.004021 | train PSNR 23.96 dB
+Iter 1940 | train loss 0.003538 | train PSNR 24.51 dB
+Iter 1950 | train loss 0.003412 | train PSNR 24.67 dB
+Iter 1960 | train loss 0.003945 | train PSNR 24.04 dB
+Iter 1970 | train loss 0.003436 | train PSNR 24.64 dB
+Iter 1980 | train loss 0.004220 | train PSNR 23.75 dB
+Iter 1990 | train loss 0.003638 | train PSNR 24.39 dB
+Iter 2000 | train loss 0.004149 | train PSNR 23.82 dB
+Rendered range: 0.0 to 0.9911313
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9956993
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9876378
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9790861
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9443633
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8983343
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8702388
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9922106
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9884351
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9841737
+GT range: 0.0 to 1.0
+[VAL] Iter 2000 | per-image PSNRs: [25.184999465942383, 25.799999237060547, 24.406999588012695, 24.402000427246094, 25.427000045776367, 26.40999984741211, 26.701000213623047, 25.298999786376953, 24.805999755859375, 25.093000411987305] | mean PSNR: 25.353 dB
+Iter 2010 | train loss 0.003389 | train PSNR 24.70 dB
+Iter 2020 | train loss 0.004435 | train PSNR 23.53 dB
+Iter 2030 | train loss 0.003790 | train PSNR 24.21 dB
+Iter 2040 | train loss 0.003846 | train PSNR 24.15 dB
+Iter 2050 | train loss 0.003860 | train PSNR 24.13 dB
+Iter 2060 | train loss 0.004087 | train PSNR 23.89 dB
+Iter 2070 | train loss 0.003789 | train PSNR 24.22 dB
+Iter 2080 | train loss 0.004045 | train PSNR 23.93 dB
+Iter 2090 | train loss 0.003508 | train PSNR 24.55 dB
+Iter 2100 | train loss 0.004089 | train PSNR 23.88 dB
+Rendered range: 0.0 to 0.9915224
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99598724
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98747855
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97903675
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9455123
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.90028954
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.844343
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.992291
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.988467
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9863652
+GT range: 0.0 to 1.0
+[VAL] Iter 2100 | per-image PSNRs: [24.9060001373291, 25.601999282836914, 24.402999877929688, 24.365999221801758, 25.479999542236328, 26.11199951171875, 26.672000885009766, 25.209999084472656, 24.945999145507812, 25.033000946044922] | mean PSNR: 25.273 dB
+Iter 2110 | train loss 0.003140 | train PSNR 25.03 dB
+Iter 2120 | train loss 0.003700 | train PSNR 24.32 dB
+Iter 2130 | train loss 0.003784 | train PSNR 24.22 dB
+Iter 2140 | train loss 0.003476 | train PSNR 24.59 dB
+Iter 2150 | train loss 0.003484 | train PSNR 24.58 dB
+Iter 2160 | train loss 0.003792 | train PSNR 24.21 dB
+Iter 2170 | train loss 0.003667 | train PSNR 24.36 dB
+Iter 2180 | train loss 0.003493 | train PSNR 24.57 dB
+Iter 2190 | train loss 0.003526 | train PSNR 24.53 dB
+Iter 2200 | train loss 0.004279 | train PSNR 23.69 dB
+Rendered range: 0.0 to 0.9917807
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9967114
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9893239
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97820246
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9495408
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8875736
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.84878784
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9934761
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99041796
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9875931
+GT range: 0.0 to 1.0
+[VAL] Iter 2200 | per-image PSNRs: [24.908000946044922, 25.86199951171875, 24.496999740600586, 24.42799949645996, 25.393999099731445, 26.135000228881836, 26.60300064086914, 25.20400047302246, 24.82699966430664, 25.165000915527344] | mean PSNR: 25.302 dB
+Iter 2210 | train loss 0.003662 | train PSNR 24.36 dB
+Iter 2220 | train loss 0.003754 | train PSNR 24.26 dB
+Iter 2230 | train loss 0.003853 | train PSNR 24.14 dB
+Iter 2240 | train loss 0.003659 | train PSNR 24.37 dB
+Iter 2250 | train loss 0.003197 | train PSNR 24.95 dB
+Iter 2260 | train loss 0.003991 | train PSNR 23.99 dB
+Iter 2270 | train loss 0.003586 | train PSNR 24.45 dB
+Iter 2280 | train loss 0.003613 | train PSNR 24.42 dB
+Iter 2290 | train loss 0.003394 | train PSNR 24.69 dB
+Iter 2300 | train loss 0.003361 | train PSNR 24.73 dB
+Rendered range: 0.0 to 0.9916198
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99590904
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98722756
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97261727
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.94830406
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.87953204
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8435497
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9918789
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98878807
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98761386
+GT range: 0.0 to 1.0
+[VAL] Iter 2300 | per-image PSNRs: [25.131999969482422, 25.812999725341797, 24.503999710083008, 24.56999969482422, 25.5310001373291, 26.20199966430664, 26.45400047302246, 25.143999099731445, 24.733999252319336, 25.062999725341797] | mean PSNR: 25.315 dB
+Iter 2310 | train loss 0.003092 | train PSNR 25.10 dB
+Iter 2320 | train loss 0.003946 | train PSNR 24.04 dB
+Iter 2330 | train loss 0.003430 | train PSNR 24.65 dB
+Iter 2340 | train loss 0.003763 | train PSNR 24.24 dB
+Iter 2350 | train loss 0.003468 | train PSNR 24.60 dB
+Iter 2360 | train loss 0.003778 | train PSNR 24.23 dB
+Iter 2370 | train loss 0.004248 | train PSNR 23.72 dB
+Iter 2380 | train loss 0.003084 | train PSNR 25.11 dB
+Iter 2390 | train loss 0.003708 | train PSNR 24.31 dB
+Iter 2400 | train loss 0.003418 | train PSNR 24.66 dB
+Rendered range: 0.0 to 0.9919552
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99584633
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.98605675
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9741807
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9261816
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.87597066
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8324739
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9924952
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9881806
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9871677
+GT range: 0.0 to 1.0
+[VAL] Iter 2400 | per-image PSNRs: [25.562999725341797, 26.13800048828125, 24.724000930786133, 24.648000717163086, 25.599000930786133, 26.48200035095215, 26.895999908447266, 25.54400062561035, 25.184999465942383, 25.360000610351562] | mean PSNR: 25.614 dB
+Iter 2410 | train loss 0.003947 | train PSNR 24.04 dB
+Iter 2420 | train loss 0.003564 | train PSNR 24.48 dB
+Iter 2430 | train loss 0.003791 | train PSNR 24.21 dB
+Iter 2440 | train loss 0.003685 | train PSNR 24.34 dB
+Iter 2450 | train loss 0.003761 | train PSNR 24.25 dB
+Iter 2460 | train loss 0.003862 | train PSNR 24.13 dB
+Iter 2470 | train loss 0.003344 | train PSNR 24.76 dB
+Iter 2480 | train loss 0.003145 | train PSNR 25.02 dB
+Iter 2490 | train loss 0.003370 | train PSNR 24.72 dB
+Rendered range: 0.0 to 0.99257576
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99677503
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9892404
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.97695726
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.94939053
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.90780723
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.8474964
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99296993
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.99063176
+GT range: 0.0 to 1.0
+Rendered range: 0.0 to 0.9890205
+GT range: 0.0 to 1.0
+[VAL] Iter 2499 | per-image PSNRs: [25.368000030517578, 26.336999893188477, 24.875999450683594, 24.72599983215332, 25.69499969482422, 26.75, 27.0049991607666, 25.683000564575195, 25.1560001373291, 25.535999298095703] | mean PSNR: 25.713 dB
