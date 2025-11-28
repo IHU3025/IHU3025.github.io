@@ -1,0 +1,641 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Mosaicing</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --text-color: #333;
+            --spacing: 2rem;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            color: #2c3e50;
+            text-align: center;
+            padding: 3rem 1rem;
+            padding-top: 3rem; 
+            margin-top: 4rem; 
+            margin-bottom: var(--spacing);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            margin-bottom: var(--spacing);
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .overview p, .approach p {
+            margin-bottom: 1rem;
+        }
+        
+        .image-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .image-table td {
+            width: 50%;
+            padding: 1rem;
+            vertical-align: top;
+        }
+        
+        .image-table img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .image-table .caption {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .image-grid .caption {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .image-grid img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .problems-list {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .problems-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .inner-list li {
+            margin-top: 10px;
+            margin-left: 20px;
+            line-height: 1.2;
+        }
+        
+        .bells-whistles {
+            margin-left: 2rem;
+        }
+        
+        .bells-whistles li {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: var(--spacing);
+        }
+        
+        @media (max-width: 768px) {
+            .image-table, .image-table tbody, .image-table tr, .image-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .image-table td {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Diffusion Models for Image Generation and Editing</h1>
+            <p>Text-to-Image Synthesis with DeepFloyd IF</p>
+            <br>
+            <p>CS180 Project #5</p>
+            <p>Isabella Hu</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="overview">
+            <h2>Project Overview</h2>
+            <p>This project explores diffusion models for image generation 
+                and editing using the DeepFloyd IF model. The implementation
+                 includes forward diffusion processes, iterative denoising,
+                  classifier-free guidance, and applications such as image-to-image 
+                  translation, inpainting, visual anagrams, and hybrid image generation.</p> </section>
+        
+        <section class="part0">
+            <h2>Part 0: Setup</h2>
+            
+            <h3>Text Prompts and Generated Images</h3>
+
+
+            <h3>Text prompts </h3>
+            <div class="problems-list">
+                <ul>
+                   <li>1. 'a high quality picture'</li>
+                    <li>2. 'an oil painting of a snowy mountain village'</li>
+                    <li>3. 'a photo of the amalfi coast'</li>
+                    <li>4. 'a photo of a female Victorian detective'</li>
+                    <li>5. 'a impressionism painting of a cathedral'</li>
+                    <li>6. 'a photo of a dog'</li>
+                    <li>7. 'a photo of a spiral staircase leading to a black hole'</li>
+                    <li>8. 'a lithograph of waterfalls'</li>
+                    <li>9. 'a lithograph of a skull'</li>
+                    <li>10. 'a photo of man wearing a octopus'</li>
+                    <li>11. 'a photo of a terrified astronaut'</li>
+                    <li>16. ''</li>
+                </ul>
+            </div>
+            
+            <h4>Prompt 1: 'a photo of a female Victorian detective'</h4>
+            <div class="image-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div>
+                    <img src="./web/part1/0/2.png" alt="Image with num_inference_steps=X">
+                    <div class="caption">num_inference_steps = 20</div>
+                </div>
+                <div>
+                    <img src="./web/part1/0/1003.png" alt="Image with num_inference_steps=Y">
+                    <div class="caption">num_inference_steps = 100</div>
+                </div>
+            </div>
+            <p><strong>Reflection:</strong> Across the different step counts, the images consistently depict Victorian-era attire well, but they don't provide enough visual cues to emphasize the detective aspect.</p>
+            
+            <h4>Prompt 2: 'a photo of man wearing a octopus'</h4>
+            <div class="image-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div>
+                    <img src="./web/part1/0/1.png" alt="Image with num_inference_steps=X">
+                    <div class="caption">num_inference_steps = 20</div>
+                </div>
+                <div>
+                    <img src="./web/part1/0/1002.png" alt="Image with num_inference_steps=Y">
+                    <div class="caption">num_inference_steps = 100</div>
+                </div>
+            </div>
+            <p><strong>Reflection:</strong> The run with 20 inference steps performed better than the one with 100. This may due to the stylistic cues get washed out throughout the longer denoising process.
+                Interestingly, even though I didn't specify the man's age, both portray him 
+                as middle-aged with a collar, which reveals an inherent bias in the model.</p>
+            
+            <h4>Prompt 3: 'a impressionism painting of a cathedral'</h4>
+            <div class="image-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div>
+                    <img src="./web/part1/0/4.png" alt="Image with num_inference_steps=X">
+                    <div class="caption">num_inference_steps = 20</div>
+                </div>
+                <div>
+                    <img src="./web/part1/0/1004.png" alt="Image with num_inference_steps=Y">
+                    <div class="caption">num_inference_steps = 100</div>
+                </div>
+            </div>
+            <p><strong>Reflection:</strong> Both images are quite similar, each highlighting the cathedral's features, though they struggled to convincingly mimic a painting style.</p>
+            
+            <h5>Random Seed</h5>
+            <p><strong>Random seed used:</strong>100</p>
+        </section>
+        
+        <section class="part1">
+            <h2>Part 1: Sampling Loops</h2>
+            
+            <h4>1.1 Forward Function Implementation</h4>
+            <p>
+                   \[ q(x_t \mid x_0) = \mathcal{N}\!\big(x_t;\; \sqrt{\bar{\alpha}_t}\,x_0,\; (1-\bar{\alpha}_t)\,I\big) \]
+
+            </p>
+            <div class="code-block">
+                def forward(im, t):<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;alpha_bar_t = alphas_cumprod[t]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;epsilon = torch.randn_like(im)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;im_noisy = torch.sqrt(alpha_bar_t) * im + torch.sqrt(1-alpha_bar_t) * epsilon<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return im_noisy
+            </div>
+            
+            <div class="image-grid" style="grid-template-columns: repeat(1, 1fr);">
+                <div>
+                    <img src="./web/part1/1.1noise.png" alt="Campanile at t=250">
+                    <div class="caption">Noisy Campanile at Different Timesteps</div>
+                </div>
+            </div>
+
+            <h4>1.2 Classical Denoising</h4>
+            <p>Using torchvision.transforms.functional.gaussian_blur to denoise</p>
+             
+            <div class="image-grid" style="grid-template-columns: repeat(1, 1fr);">
+                <div>
+                    <img src="./web/part1/1.2.3.png" alt="Campanile at t=250">
+                    <div class="caption">Best Gaussian denoising with kernel_size = 7, sigma = 2 </div>
+                </div>
+            </div>
+
+            <h4>1.3 One-Step Denoising</h4>
+            <p>
+            The denoised image is computed as:
+            </p>
+
+            <pre>
+            im_denoised = (im_noisy - torch.sqrt(1 - alpha_cumprod) * noise_est) / torch.sqrt(alpha_cumprod)
+            </pre>
+
+            <p>
+            Where<code>noise_est</code> is obtained from <code>stage_1.unet</code>, which takes the noisy image, timestep tensor, and prompt embeddings as input. 
+            The text prompt embedding is <em>"a high quality photo"</em>.
+            </p>
+
+            <div class="image-grid" style="display: grid; grid-template-columns: 1fr 4fr; gap: 16px;">
+        
+                <div>
+                    <img src="./web/part1/original.png" alt="Campanile at t=250">
+                    <div class="caption">Original image</div>
+                </div>
+                <div>
+                <img src="./web/part1/1.3.png" alt="Campanile at t=250">
+                <div class="caption">One Step Denoising through stage_1.unet</div>
+                </div>
+        
+            </div>
+
+
+            <h4>1.4 Iterative Denoising</h4>
+            <div class="equation">
+                \[
+                    x_{t'} = \frac{\sqrt{\bar{\alpha}_{t'}} \, \beta_t}{1 - \bar{\alpha}_t} \, x_0
+                            + \frac{\sqrt{\alpha_t}(1 - \bar{\alpha}_{t'})}{1 - \bar{\alpha}_t} \, x_t
+                            + v_{\sigma}
+                \]
+            </div>
+
+                <p>
+                where:
+                <ul>
+                    <li><code>x_t</code> is the noisy image at timestep <em>t</em>.</li>
+                    <li><code>x_{t'}</code> is the less noisy image at the next timestep.</li>
+                    <li><code>x_0</code> is the current estimate of the clean image (one-step denoising).</li>
+                    <li><code>\bar{\alpha}_t</code> comes from <code>alphas_cumprod</code>.</li>
+                    <li><code>v_{\sigma}</code> adds variance for stochasticity.</li>
+                </ul>
+                </p>
+                <br>
+                <p>
+                Create strided timesteps starting at 990 and ending at 0 with stride 30,
+                then initialize the scheduler with these timesteps:
+                </p>
+                <pre><code class="language-python">
+                strided_timesteps = list(range(990, -1, -30)) 
+                stage_1.scheduler.set_timesteps(timesteps=strided_timesteps)
+                </code></pre>
+
+                   <div class="image-grid" style="grid-template-columns: repeat(1, 2fr);">
+                <div>
+                    <img src="./web/part1/1.5.1.png" alt="Campanile at t=250">
+                    <div class="caption">Noisy Campanile every 5th loop of denoising</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.5.2.png" alt="Campanile at t=250">
+                    <div class="caption">Predicted clean image with different approach</div>
+                </div>
+    
+                 </div>
+
+
+
+             <h4>1.5 Diffusion Model Sampling</h4>
+
+                <div class="image-grid" style="grid-template-columns: repeat(5, 1fr);">
+                <div>
+                    <img src="./web/part1/1.5gen164.png" alt="Campanile at t=250">
+                    <div class="caption">Sample 1</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.5gen64.2.png" alt="Campanile at t=250">
+                    <div class="caption">Sample 2</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.5gen64.3.png" alt="Campanile at t=250">
+                    <div class="caption">Sample 3</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.5gen64.5.png" alt="Campanile at t=250">
+                    <div class="caption">Sample 5</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.5gen64.6.png" alt="Campanile at t=250">
+                    <div class="caption">Sample 6</div>
+                </div>
+                </div>
+
+            <h4>1.6 Classifier-Free Guidance (CFG) Denoising</h4>
+                <p>Combines a conditional noise estimate (based on a text prompt) and an unconditional noise estimate (based on an empty prompt)</p>
+                <p>The CFG noise estimate is defined as:</p>
+                <div class="equation">
+                \[
+                    \epsilon = \epsilon_u + \gamma \, (\epsilon_c - \epsilon_u) \quad
+                \]
+                </div>
+
+                <ul>
+                <li><code>ε_c</code>: noise estimate conditioned on the text prompt.</li>
+                <li><code>ε_u</code>: unconditional noise estimate (empty prompt).</li>
+                <li><code>&gamma;</code>: guidance scale. 
+                    <ul>
+                    <li>&gamma; = 0 → unconditional estimate</li>
+                    <li>&gamma; = 1 → conditional estimate</li>
+                    <li>&gamma; > 1 → higher quality images (less diversity)</li>
+                    </ul>
+                </li>
+                </ul>
+                <div class = "code-block">
+                    # Run UNet twice to get cond_output and uncond_output <br>
+                    # Split into noise and variance<br>
+                    noise_est, predicted_variance = torch.split(cond_output, image.shape[1], dim=1)<br>
+                    uncond_noise_est, _ = torch.split(uncond_output, image.shape[1], dim=1)<br>
+
+                    # Apply CFG formula<br>
+                    noise_est = uncond_noise_est + scale * (noise_est - uncond_noise_est)<br>
+                </div>
+
+                <div class="image-grid" style="grid-template-columns: repeat(1, 1fr);">
+                    <div>
+                        <img src="./web/part1/1.6.1.png" alt="Campanile at t=250">
+                        <div class="caption">5 images of "a high quality photo" with CFG lambda = 7</div>
+                    </div>
+
+                </div>
+
+            <h4>1.7 Image-to-image Translation</h4>
+                <p>This process takes a real image, adds noise through the foward process, and then applies 
+                    iterative_denoise_cfg to restore it, resulting subtle to stronger edits depending on the starting
+                     noise level.</p>
+                <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 3fr 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/1.7.2.png" alt="Campanile at t=250" style="width:100%;">
+                    <div class="caption">Edits of the Campanile image, cond_prompt = "a high quality photo"</div>
+                </div>
+                <div>
+                    <img src="./web/part1/original.png" alt="Campanile at t=250" style="width:80%;">
+                    <div class="caption">Campanile</div>
+                </div>
+                </div>
+                 <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 3fr 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/1.7.4.png" alt="Campanile at t=250" style="width:100%;">
+                    <div class="caption">Edits of the Custom Image 1, cond_prompt = "a high quality photo"</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.7/head.jpg" alt="Campanile at t=250" style="width:80%;">
+                    <div class="caption">Oriignal</div>
+                </div>
+                </div>
+                 <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 3fr 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/1.71.2.png" alt="Campanile at t=250" style="width:100%;">
+                    <div class="caption">Edits of the Custom Image 2, cond_prompt = "a high quality photo"</div>
+                </div>
+                <div>
+                    <img src="./web/part1/1.7/11.21.23_candide2.jpg" alt="Campanile at t=250" style="width:80%;">
+                    <div class="caption">Orignal</div>
+                </div>
+                </div>
+
+              <h4>1.7.2 inpainting</h4>
+              <p>
+                At each step of the diffusion denoising loop, after obtaining <code>x_t</code>, we enforce the constraint:
+                </p>
+
+                <div class="equation">
+                \[
+                    x_t \;\leftarrow\; \mathbf{m} \, x_t \;+\; (1 - \mathbf{m}) \, \text{forward}(x_{orig}, t) \
+                \]
+                </div>
+                <ul>
+                    <li><code>x_t</code>: the current noisy image at timestep <em>t</em>.</li>
+                    <li><code>x_orig</code>: the original image before editing.</li>
+                    <li><code>m</code>: binary mask (1 = region to edit, 0 = region to preserve).</li>
+                    <li><code>forward(x_orig, t)</code>: the forward process that adds the correct amount of noise to the original image at timestep <em>t</em>.</li>
+                    </ul>
+
+
+                <div class = "code-block">
+                    # Run the same CFG denoising process <br>
+                    # Replace everything outside the mask with the original image after each step
+                    original_noisy = forward(original_image, prev_t).half().to(device)
+                    image = pred_prev_image * mask + original_noisy * (1 - mask)
+
+                </div>
+              
+               <div class="image-grid"  
+                     style="display: grid; grid-template-columns: 1fr; gap: 16px; align-items: center; justify-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/1.7.2.2.png" alt="Campanile at t=250" style="width:80%; max-width:600px;">
+                    <div class="caption">Campanile Inpainted</div>
+                </div>
+                </div>
+                 <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 1 1fr; gap: 16px; align-items: center; justify-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/1.7.2.4.png" alt="Campanile at t=250" style="width:80%; max-width:600px;">
+                    <div class="caption">Custom Image 1 Inpainted</div>
+                </div>
+                </div>
+                 <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 1 1fr; gap: 16px; align-items: center; justify-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/1.7.2.5.png" alt="Campanile at t=250"  style="width:80%; max-width:600px;">
+                    <div class="caption">Custom Image 2 Inpainted</div>
+                </div>
+                </div>
+
+              <h4>1.7.3 Text-Conditional Image-to-image Translation</h4>
+          
+                <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 1 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/text/3.png" alt="Campanile at t=250" style="width:100%;">
+                    <div class="caption">Campanile, cond_prompt = "a lithograph of waterfalls"</div>
+                </div>
+
+                </div>
+                 <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 1 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/text/download.png" alt="Campanile at t=250" style="width:100%;">
+                    <div class="caption">Custom 1, cond_prompt = "a photo of the amalfi coast"</div>
+                </div>
+
+                </div>
+                  <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 1 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/1.7/text/download5.png" alt="Campanile at t=250" style="width:100%;">
+                    <div class="caption">Custom 2, cond_prompt = "a photo of a terrified  astronaut"</div>
+                </div>
+                </div>
+
+            <h4>1.8 Visual Anagrams</h4>
+              <p>
+                At each step we compute two noise estimates: one conditioned on prompt p₁ 
+                using the original image xₜ, and one conditioned on prompt p₂ using the vertically 
+                flipped image flip(xₜ). Then we flip the second estimate back, and average the two noises. 
+                </p>
+
+                <div class="equation">
+                \[
+                    \epsilon_1 = \text{CFG of UNet}(x_t, t, p_1) \
+                \]
+                \[
+                   \epsilon_2 = \text{flip}(\text{CFG of UNet}(\text{flip}(x_t), t, p_2))\
+                \]
+                \[
+                    \epsilon = (\epsilon_1 + \epsilon_2) / 2 \
+                \]
+                </div>
+            
+              
+                <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 2 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/8/2.png" alt="Campanile at t=250" style="width:100%;">
+                </div>
+               
+                <div>
+                    <img src="./web/part1/8/3.png" alt="Campanile at t=250" style="width:100%;">
+                </div>
+                </div>
+
+             <h4>1.9 Hybrid Images</h4>
+              <p>
+                At each step we compute two noise estimates: one conditioned on prompt p₁ 
+                using image xₜ, and one conditioned on prompt p₂ using  image xₜ. 
+                Then combine the two noises by low-pass filtering the first and high-pass filtering the second.
+                </p>
+
+                <div class="equation">
+                \[
+                    \epsilon_1 = \text{CFG of UNet}(x_t, t, p_1) \
+                \]
+                \[
+                   \epsilon_2 = \text{CFG of UNet}(x_t, t, p_2)\
+                \]
+                \[
+                    \epsilon = f_\text{lowpass}(\epsilon_1) + f_\text{highpass}(\epsilon_2)\
+                \]
+                </div>
+                <div class = "code-block">
+                    kernel_size = 33<br>
+                    sigma = 2.0<br>
+                            
+                    noise_est_1_lowpass = F.gaussian_blur(noise_est_1_cfg, kernel_size=kernel_size, sigma=sigma)<br>
+                    noise_est_2_lowpass = F.gaussian_blur(noise_est_2_cfg, kernel_size=kernel_size, sigma=sigma)<br>
+                    noise_est_2_highpass = noise_est_2_cfg - noise_est_2_lowpass<br>
+                    noise_est_combined = noise_est_1_lowpass + noise_est_2_highpass<br>
+                    </div>
+                            
+                <div class="image-grid" 
+                    style="display: grid; grid-template-columns: 2 1fr; gap: 16px; align-items: center;">
+                <div>
+                    <img src="./web/part1/8/7.png" alt="Campanile at t=250" style="width:100%;">
+                </div>
+               
+                <div>
+                    <img src="./web/part1/8/10.png" alt="Campanile at t=250" style="width:100%;">
+                </div>
+                </div>
+              
+
+            
+
+
+
+
+
+
+
+
+        </div>
+            
+        </section>
+     
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Neural Radiance Field Project</p>
+            <p>Computational Photography - 2025</p>
+        </div>
+    </footer>
+</body>
+</html>
