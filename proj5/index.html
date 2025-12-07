@@ -614,20 +614,324 @@
                     <img src="./web/part1/8/10.png" alt="Campanile at t=250" style="width:100%;">
                 </div>
                 </div>
-              
-
-            
-
-
-
-
-
-
-
-
         </div>
-            
         </section>
+        <section class="part2">
+            <h2>Part 2: Training a Flow Matching Model</h2>
+
+            <p>
+                Imeplemented iterative denoising via flow matching through training a time-conditioned UNet
+                to predict the velocity field that transports pure noise images toward the MNIST data distribution.
+            </p>
+
+            <h3>1: Traning a Single Step Denoising UNet</h3>
+            <h4>1.1 Implementing the UNet</h4>
+            <p>Implementing a denoiser so that it maps z to a clean image x</p>
+
+             <div class="image-grid" style="grid-template-columns: repeat(1, 2fr);">
+                <div>
+                    <img src="./web/unconditional_arch.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Unconditional UNet</div>
+                </div>
+                <div>
+                    <img src="./web/atomic_ops_new.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">UNet Operations</div>
+                </div>
+
+
+            <h4>1.2 Using the UNet to Train a Denoiser</h4>
+                <p>
+                To train the UNet as a denoiser, we construct noisy–clean pairs for supervised learning.
+                To get the the noisy data \(z\), 
+                we add Gaussian noise to a clean MNIST digit image \(x\):
+                \[
+                z = x + \sigma \epsilon, \quad \text{where } \epsilon \sim \mathcal{N}(0, I).
+                \]
+             </p>
+
+                <div>
+                    <img src="./web/part2/1.2.1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">UNet Operations</div>
+                </div>
+
+             <h4>1.2.1 Training</h4>
+                <p>
+                Model and Optimizer: Use the UNet architecture from Section 1.1 with hidden dimension <code>D = 128</code>, optimized with Adam at a learning rate of <code>1e-4</code>.
+
+                </p>
+
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <img src="./web/part2/t3.png" alt="Time-conditioned UNet architecture">
+                        <div class="caption">Training loss curve plot for training process of \(sigma = 0.5\)</div>
+                    </div>
+                </div>
+                
+             <div class="image-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div>
+                    <img src="./web/part2/t3_1.2.1.1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results with noise level 0.5 after the first epoch</div>
+                </div>
+                <div>
+                    <img src="./web/part2/t3_1.2.1.5.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results with noise level 0.5 after the fifth epoch</div>
+                </div>
+            </div>
+
+                 <h4>1.2.2 Out-of-Distribution Testing</h4>
+                <p>
+                    Performance deteriorates with higher σ values outside the training range
+                </p>
+
+                 <div style="display: flex; justify-content: center;">
+                    <div>
+                        <img src="./web/part2/t3_1.2.2.png" alt="Time-conditioned UNet architecture">
+                        <div class="caption">Out of distribution sample results</div>
+                    </div>
+                </div>
+
+                
+             <h4>1.2.3 Demoising Pure Noise </h4>
+
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <img src="./web/part2/1.2.3.g.png" alt="Time-conditioned UNet architecture">
+                        <div class="caption">Training loss curve plot for training process</div>
+                    </div>
+                </div>
+                
+             <div class="image-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div>
+                    <img src="./web/part2/1.2.3.3.1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results on pure noise after first epoch</div>
+                </div>
+                <div>
+                    <img src="./web/part2/1.2.3.5.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results on pure noise after the fifth epoch</div>
+                </div>
+            </div>
+                <p>
+                The denoiser trained on pure noise output a blurry blob which is the average of all training images
+                 (statistical mean of the MNIST dataset). This happen because with MSE loss, the model learns to predict
+                  the point minimizing squared distance to all outputs. Since inputs are pure noise the optimal prediction
+                   will minimizes average squared error across all training images resulting a "averaged digit" across pixels. 
+                </p>
+
+                
+            <h3>Part 2: Traning a Flow Matching Model</h3>
+                        <h4>2.1 Adding Time Conditioning to UNet</h4>
+                        <p>To inject a scalar t into the UNet model to condition it: </p>
+
+                        <div class="image-grid" style="grid-template-columns: repeat(1, 2fr);">
+                            <div>
+                                <img src="./web/part2/conditional_arch_fm.png" alt="Time-conditioned UNet architecture">
+                                <div class="caption">Conditional UNet</div>
+                            </div>
+                            <div>
+                                <img src="./web/part2/fc_long.png" alt="Time-conditioned UNet architecture">
+                                <div class="caption">FCBlock for conditioning</div>
+                            </div>
+
+                <h4>2.2 Training the UNet </h4>
+                        <p>
+                        To train the time-conditioned UNet \( v_\theta(x_t, t) \) to predict the flow
+                        \( u(x_t, t) = x_1 - x_0 \), for each batch:
+                    </p>
+
+                    <ol class = "problems-list">
+                        <li>Sample a clean digit \( x_1 \) from the MNIST training set.</li>
+                        <li>Sample a timestep \( t \sim \mathcal{U}(0, 1) \).</li>
+                        <li>Sample a noise image \( x_0 \sim \mathcal{N}(0, I) \) with the same shape.</li>
+                        <li>Construct the interpolated sample \( x_t = (1-t)\,x_0 + t\,x_1 \).</li>
+                        <li>Compute the target flow \( u = x_1 - x_0 \) and minimize the MSE loss between \( u_\theta(x_t, t) \) and \(u \).</li>
+                    </ol>
+
+                    <p>
+                        Training setup:
+                    </p>
+
+                    <ul class = "problems-list">
+                        <li>Dataset: MNIST training set via <code>torchvision.datasets.MNIST</code>.</li>
+                        <li>Batch size: 64.</li>
+                        <li>UNet hidden dimension: \(D = 64\).</li>
+                        <li>Optimizer: Adam, learning rate \(1 \times 10^{-2}\).</li>
+                        <li>Scheduler: ExponentialLR with gamma = \(0.1^{(1.0 / \text{num_epochs})}\), stepped once per epoch.</li>
+                    </ul>
+
+
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <img src="./web/part2/2.3/t3_curve.png" alt="Time-conditioned UNet architecture">
+                        <div class="caption">UNet training loss curve</div>
+                    </div>
+                </div>
+                
+                 <h4>2.3 Sampling from the UNet </h4>
+
+                  <p>
+                For sampling, we used learned flow field to iteratively derive the pure noise samples
+                toward the MNIST data manifold. We discretize the interval \([0, 1]\) into
+                \(N\) equal steps and perform forward Euler updates:
+            </p>
+
+            <div class="equation">
+                \[
+                    x_{t_{k+1}} = x_{t_k} - (t_k - t_{k+1}) \, v_\theta(x_{t_k}, t_k).
+                \]
+            </div>
+
+
+           
+
+                <div class="image-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div>
+                    <img src="./web/part2/2.3/t3_1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results after first epoch</div>
+                </div>
+                <div>
+                    <img src="./web/part2/2.3/t3_5.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results after fifth epoch</div>
+                </div>
+                 <div>
+                    <img src="./web/part2/2.3/t3_10.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Sample results after the tenth epoch</div>
+                </div>
+                </div>
+
+                <h4> 2.4 Adding Class-Conditioning to UNet </h4>
+                <p>
+                To gain finer control over generation and improve sample quality, we add class conditioning to UNet 
+                on digit labels. The class label is
+                encoded as a one-hot vector and passed through FCBlocks in parallel with the time embedding.
+            </p>
+
+            <p>
+                classifier-free guidance randomly drop the class conditioning with
+                probability \(p_{\text{uncond}} = 0.1\), replacing the one-hot vector with zeros:
+            </p>
+
+            <div class="code-block">
+                # class labels c in {0, ..., 9}<br>
+                c_one_hot = F.one_hot(c, num_classes=unet.num_classes).float()
+                <br>
+                    mask = (torch.rand(batch_size, device=device) > p_uncond).float()
+        <br>mask = mask.unsqueeze(-1)<br>
+        c_conditioned = c_one_hot * mask<br>
+            </div>
+
+            <p>
+                The combined conditioning is Imeplemented as:
+            </p>
+
+            <div class="code-block">
+                t1 = fc1_t(t)     # time embedding<br>
+                c1 = fc1_c(c)     # class embedding<br>
+                t2 = fc2_t(t)<br>
+                c2 = fc2_c(c)<br><br>
+
+                unflatten = c1 * unflatten + t1<br>
+                up1 = c2 * up1 + t2<br>
+            </div>
+
+                <h4> 2.5 Training the Class-Conditioned UNet </h4>
+
+                
+                    <p>
+                        The training loop is similar to the time-conditioned case, with the addition of the class vector \(c\)
+                        and classifier-free guidance dropout. 
+
+
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <img src="./web/part2/2.5/t2_c.png" alt="Time-conditioned UNet architecture">
+                        <div class="caption">Class-Conditioned UNet training loss curve plot </div>
+                    </div>
+                </div>
+                <h4> 2.6 Sampling from the UNet </h4>
+
+                    <p>
+                        At sampling time, we fix a target digit class \( c \) and use classifier-free guidance
+                        with guidance strength \( \gamma = 5.0 \). And generate both conditional and “dropped” (unconditional)
+                        predictions from the UNet, then combine them:
+                    </p>
+
+                    <div class="equation">
+                        \[
+                            u(x_t, t, c) = u_{\text{uncond}}(x_t, t, 0) +
+                            \gamma \big( u_{\text{cond}}(x_t, t, c) - u_{\text{uncond}}(x_t, t, 0) \big).
+                        \]
+                    </div>
+
+                   <div class="image-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div>
+                    <img src="./web/part2/2.5/t2_1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Class-Conditioned UNet Sample results 1st epoch </div>
+                </div>
+                <div>
+                    <img src="./web/part2/2.5/t2_5.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Class-Conditioned UNet Sample results 5th epoch </div>
+                </div>
+                 <div>
+                    <img src="./web/part2/2.5/t2_10.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Class-Conditioned UNet Sample results 10th epoch </div>
+                </div>
+                </div>
+
+
+                  <h5>Training loss and sampling without scheduler </h5>
+                  <p>I removed the exponential learning rate scheduler while keeping 
+                    all other training parameters unchanged. The results show minimal difference in both training loss 
+                    curves and output quality. 
+                  </p>
+
+
+                    <div class="image-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div>
+                    <img src="./web/part2/2.5/t4_nop_ng_1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Without scheduler sample results 1st epoch</div>
+                </div>
+                <div>
+                    <img src="./web/part2/2.5/t4_nop_ng_5.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Without scheduler sample results 5th epoch</div>
+                </div>
+                 <div>
+                    <img src="./web/part2/2.5/t4_nop_ng_10.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">Without scheduler sample results 10th epoch</div>
+                </div>
+                </div>
+                <p>I also tried  tested gradient clipping to stabilize training. While this reduced 
+                    noise in early epochs (especially 1st epoch), it did not lead to significant improvements in
+                     final model performance.
+                </p>
+
+                     <div class="image-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div>
+                    <img src="./web/part2/2.5/t3_nop_1.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">gradient clipping sample results after first epoch</div>
+                </div>
+                <div>
+                    <img src="./web/part2/2.5/t3_nop_5.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">gradient clipping sample results after fifth epoch</div>
+                </div>
+                 <div>
+                    <img src="./web/part2/2.5/t3_nop_10.png" alt="Time-conditioned UNet architecture">
+                    <div class="caption">gradient clipping sample results after the tenth epoch</div>
+                </div>
+                </div>
+
+                
+            <p>
+            Overall, in this pipline, we can eliminate the scheduler entirely while maintaining performance. 
+            And this simplifies the training pipeline without sacrificing output quality.
+            </p>
+
+            
+
+      
+       
+            </div>
+        </section>
+
      
     </div>
     
